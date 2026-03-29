@@ -10,7 +10,8 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#08080f;--bg2:#0e0e1a;--surface:rgba(255,255,255,0.035);--surface2:rgba(255,255,255,0.065);--surface3:rgba(255,255,255,0.1);--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--text:#e8eaf0;--text2:#c1c5d0;--muted:#5a6078;--accent:#7c6aed;--accent2:#6352d4;--accent-glow:rgba(124,106,237,0.15);--positive:#2dd4a0;--positive-bg:rgba(45,212,160,0.08);--warning:#f5b638;--warning-bg:rgba(245,182,56,0.08);--error:#ef6461;--error-bg:rgba(239,100,97,0.08);--xp:#f5b638;--streak:#ef6461;--track:rgba(255,255,255,0.04);--user-bubble:linear-gradient(135deg,#6352d4,#7c6aed);--bot-bubble:rgba(255,255,255,0.05);--card-shadow:0 2px 12px rgba(0,0,0,0.3);--radius:14px;--radius-sm:10px;--radius-xs:8px}
 [data-theme="light"]{--bg:#f5f4f8;--bg2:#eeedf3;--surface:rgba(0,0,0,0.03);--surface2:rgba(0,0,0,0.06);--surface3:rgba(0,0,0,0.09);--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.12);--text:#1a1a2e;--text2:#3a3a5c;--muted:#8888a8;--accent:#6352d4;--accent2:#5242b8;--accent-glow:rgba(99,82,212,0.1);--positive:#16a878;--positive-bg:rgba(22,168,120,0.08);--warning:#d49a12;--warning-bg:rgba(212,154,18,0.08);--error:#d44040;--error-bg:rgba(212,64,64,0.08);--track:rgba(0,0,0,0.04);--user-bubble:linear-gradient(135deg,#6352d4,#7c6aed);--bot-bubble:rgba(0,0,0,0.04);--card-shadow:0 2px 12px rgba(0,0,0,0.08)}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body.screen-chat{overflow:hidden}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:10px}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
@@ -48,7 +49,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .lang-btn .flag{font-size:28px}.lang-btn .name{font-size:13px;font-weight:500}
 .corner-btn{position:fixed;top:14px;right:14px;z-index:50}.corner-left{position:fixed;top:14px;left:14px;z-index:50}
 
-.dashboard{min-height:100vh;background:var(--bg);padding:20px;overflow-y:auto}
+.dashboard{min-height:100vh;background:var(--bg);padding:20px 20px 60px;overflow-y:auto}
 .dashboard::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,106,237,0.05),transparent 60%);pointer-events:none;z-index:0}
 .dash-content{max-width:800px;margin:0 auto;position:relative;z-index:1}
 .dash-header{text-align:center;padding:30px 0 24px}
@@ -182,7 +183,7 @@ function miniChart(d,c,h=50){if(!d||d.length<2)return`<div style="height:${h}px;
 function progHTML(v,m,c,l){const p=Math.min(v/m*100,100);let h=`<div style="margin-bottom:8px">`;if(l)h+=`<div style="font-size:10px;color:var(--muted);margin-bottom:3px;display:flex;justify-content:space-between"><span>${l}</span><span style="font-weight:600">${Math.round(p)}%</span></div>`;h+=`<div class="progress-track" style="height:6px"><div class="progress-fill" style="width:${p}%;background:${c}"></div></div></div>`;return h}
 function renderWords(text){return text.split(/(\s+)/).map(w=>{const c=w.replace(/[.,!?;:"""''()\[\]{}]/g,"").trim();if(!c)return esc(w);return`<span class="word-clickable" onclick="translateWord('${c.replace(/'/g,"\\'")}')">${esc(w)}</span>`}).join("")}
 
-function render(){const app=document.getElementById("app");
+function render(){const app=document.getElementById("app");document.body.className=S.screen==="chat"?"screen-chat":"";
 if(S.screen==="setup"){app.innerHTML=`<div class="setup-screen"><div class="setup-box animate-in"><div style="font-size:42px;text-align:center;margin-bottom:12px;animation:float 3s ease-in-out infinite">🌍</div><h1><span class="brand">LinguaFlow</span></h1><p class="sub">Configure sua chave de API para começar</p><label>Chave de API da Anthropic</label><input class="input" type="password" id="api-key" placeholder="sk-ant-..." value="${esc(S.apiKey)}"><div class="hint">Crie em <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>. Fica salva no navegador.</div>${S.apiError?`<div class="error-msg">${esc(S.apiError)}</div>`:""}<div style="margin-top:16px"><label>Seu nome (opcional)</label><input class="input" id="uname" placeholder="Como quer ser chamado?" value="${esc(S.username)}"></div><button class="btn btn-primary" style="width:100%;margin-top:20px;padding:14px" id="save-key">Começar →</button></div></div>`;document.getElementById("api-key").addEventListener("input",e=>{S.apiKey=e.target.value});document.getElementById("api-key").addEventListener("keydown",e=>{if(e.key==="Enter")saveApiKey()});document.getElementById("uname").addEventListener("input",e=>{S.username=e.target.value});document.getElementById("save-key").addEventListener("click",saveApiKey);return}
 
 const themeBtn=`<button class="btn-icon corner-btn" onclick="toggleTheme()" title="Tema">${S.theme==="dark"?"☀️":"🌙"}</button>`;
