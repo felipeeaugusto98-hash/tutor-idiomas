@@ -218,6 +218,43 @@ body.lock{overflow:hidden}
   .h-badges{display:none!important}
 }
 @media(min-width:769px){.mob-t{display:none!important}.mob-ov{display:none!important}}
+
+/* Landing */
+.landing{min-height:100vh;background:var(--bg);overflow-y:auto}
+.land-hero{max-width:800px;margin:0 auto;padding:80px 24px 40px;text-align:center}
+.land-logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--ac),#818CF8);display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 8px 32px rgba(79,70,229,.2)}
+.land-h1{font-family:'Newsreader',serif;font-size:clamp(36px,6vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1.1;margin-bottom:12px}
+.land-h1 em{color:var(--ac);font-style:italic}
+.land-p{font-size:18px;color:var(--mt);max-width:500px;margin:0 auto 32px;line-height:1.6}
+.land-cta{padding:16px 40px;font-size:16px;border-radius:var(--rs)}
+.land-feats{max-width:800px;margin:0 auto;padding:0 24px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.lf{padding:24px;border-radius:var(--r);background:var(--bg2);border:1px solid var(--bd);box-shadow:var(--shadow);text-align:left}
+.lf-icon{font-size:28px;margin-bottom:10px}.lf-title{font-size:15px;font-weight:700;margin-bottom:4px}.lf-desc{font-size:13px;color:var(--mt);line-height:1.5}
+.land-footer{text-align:center;padding:20px;font-size:12px;color:var(--mt);border-top:1px solid var(--bd)}
+
+/* Quiz */
+.quiz{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
+.quiz-box{max-width:520px;width:100%;background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:36px 28px;box-shadow:var(--shadow-lg)}
+.quiz-prog{display:flex;gap:6px;margin-bottom:24px}
+.qp{flex:1;height:4px;border-radius:99px;background:var(--bg3);transition:all .3s}.qp.done{background:var(--ac)}.qp.cur{background:var(--ac);animation:pulse 1.5s infinite}
+.quiz-q{font-size:18px;font-weight:600;margin-bottom:20px;line-height:1.5;letter-spacing:-.02em}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:14px 18px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:14px;font-family:inherit;color:var(--tx);text-align:left;transition:all .2s;box-shadow:var(--shadow-sm);width:100%}
+.qo:hover{border-color:var(--ac);background:var(--acl)}.qo.sel{border-color:var(--ac);background:var(--acl2);font-weight:600}
+
+/* Onboarding */
+.onb-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .3s}
+.onb-card{max-width:420px;width:90%;background:var(--bg2);border-radius:20px;padding:32px;box-shadow:var(--shadow-lg);animation:scaleIn .4s cubic-bezier(.16,1,.3,1);text-align:center}
+.onb-icon{font-size:48px;margin-bottom:12px}.onb-title{font-size:20px;font-weight:700;margin-bottom:6px}.onb-desc{font-size:14px;color:var(--mt);line-height:1.6;margin-bottom:20px}
+.onb-dots{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+.onb-dot{width:8px;height:8px;border-radius:50%;background:var(--bg3)}.onb-dot.on{background:var(--ac)}
+
+/* Daily */
+.daily{background:linear-gradient(135deg,rgba(79,70,229,.06),rgba(129,140,248,.03));border:1px solid rgba(79,70,229,.12);border-radius:var(--r);padding:20px;margin-bottom:20px;position:relative;overflow:hidden}
+.daily::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(79,70,229,.04)}
+.daily-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;background:var(--acl2);color:var(--ac);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.daily-title{font-size:16px;font-weight:700;margin-bottom:4px}.daily-desc{font-size:13px;color:var(--mt);line-height:1.5;margin-bottom:10px}
+.daily-reward{font-size:11px;color:var(--warn);font-weight:600}
 </style>
 </head>
 <body>
@@ -230,21 +267,43 @@ const FSCENES=[{id:"hangout",name:"Rolê casual",icon:"🍕",p:"Hanging out at s
 const VIDS=[{id:"v1",title:"How to Order Food Like an American",yt:"dQw4w9WgXcQ",cat:"Cotidiano",lv:"Iniciante"},{id:"v2",title:"10 Slang Words You Need",yt:"ZbZSe6N_BXs",cat:"Gírias",lv:"Elementar"},{id:"v3",title:"How Americans Really Talk",yt:"VVv3EjSRYbs",cat:"Pronúncia",lv:"Intermediário"},{id:"v4",title:"English with TV Series",yt:"Dd7FixvoKBw",cat:"Séries",lv:"Intermediário"},{id:"v5",title:"American vs British English",yt:"5wSw3IWRJa0",cat:"Cultura",lv:"Elementar"},{id:"v6",title:"Job Interview English",yt:"naIkpQ_cIt0",cat:"Profissional",lv:"Intermediário"}];
 const LVS=["Iniciante","Elementar","Intermediário","Avançado","Fluente"],LCOL=["#F97316","#EAB308","#22C55E","#3B82F6","#A855F7"];
 const ACHS=[{id:"first_msg",icon:"🎯",n:"1ª msg"},{id:"streak_3",icon:"🔥",n:"3 dias"},{id:"vocab_10",icon:"📚",n:"10 palavras"},{id:"vocab_50",icon:"🎓",n:"50 palavras"},{id:"slang_10",icon:"💥",n:"10 gírias"},{id:"lesson_3",icon:"📖",n:"3 aulas"},{id:"friends_5",icon:"👥",n:"5 chats"},{id:"watch_3",icon:"🎬",n:"3 vídeos"}];
+const QUIZ=[
+  {q:"Choose the correct sentence:",opts:["She don't like coffee","She doesn't likes coffee","She doesn't like coffee","She not like coffee"],ans:2,lv:0},
+  {q:"\"I ___ to the store yesterday.\"",opts:["go","goes","going","went"],ans:3,lv:1},
+  {q:"\"If I ___ rich, I would travel the world.\"",opts:["am","was","were","be"],ans:2,lv:2},
+  {q:"What does \"I'm gonna grab a bite\" mean?",opts:["I'm going to bite someone","I'm going to eat something","I'm going to take a nap","I'm going to leave"],ans:1,lv:2},
+  {q:"\"She's been working here ___ 2019.\"",opts:["for","since","from","at"],ans:1,lv:1},
+];
+const DAILIES=[
+  {title:"Apresente-se em inglês",desc:"Abra o chat com amigos e se apresente: nome, idade, de onde você é, o que gosta de fazer.",action:"friends",reward:25},
+  {title:"Peça comida em inglês",desc:"Simule que está em um restaurante americano com Mr. James e peça um prato completo.",action:"teacher",reward:25},
+  {title:"Aprenda 3 gírias novas",desc:"Converse com o grupo de amigos até aprender pelo menos 3 gírias novas.",action:"friends",reward:30},
+  {title:"Assista um vídeo",desc:"Escolha um vídeo sugerido e assista com os amigos, discutindo o que entendeu.",action:"watch",reward:30},
+  {title:"Complete uma aula",desc:"Faça uma aula completa com Mr. James sobre qualquer tema de gramática.",action:"teacher",reward:35},
+  {title:"Conte sobre seu dia",desc:"Abra a conversa livre e descreva seu dia inteiro em inglês, usando o passado.",action:"free",reward:25},
+  {title:"Debata um tema",desc:"Discuta com os amigos sobre um tema polêmico (pizza com abacaxi?) em inglês.",action:"friends",reward:30},
+];
+const ONB_STEPS=[
+  {icon:"👋",title:"Bem-vindo ao LinguaFlow!",desc:"Aqui você aprende inglês de verdade — conversando com IA, não decorando regras."},
+  {icon:"👨‍🏫",title:"Mr. James, seu professor",desc:"Ele explica gramática no quadro, compara inglês formal com o real, e te guia por lições estruturadas."},
+  {icon:"👥",title:"Amigos americanos",desc:"Jake, Mia e Tyler — um grupo que fala com gírias, abreviações e memes. Inglês como americano fala de verdade."},
+  {icon:"🎬",title:"Watch Party",desc:"Assista vídeos do YouTube junto com seus amigos ou com Mr. James explicando tudo."},
+  {icon:"🔥",title:"Pratique todo dia!",desc:"Complete o desafio diário, mantenha seu streak e desbloqueie conquistas. Bons estudos!"},
+];
 
 function ld(){try{return JSON.parse(localStorage.getItem("lf3"))||{}}catch(e){return{}}}
 const sv=ld();
-let S={screen:"setup",apiKey:sv.apiKey||"",mode:"",messages:[],input:"",loading:false,feedback:[],level:0,sideTab:"feedback",mobilePanel:false,apiError:"",theme:sv.theme||"light",xp:sv.xp||0,xpLevel:sv.xpLevel||1,streak:sv.streak||0,lastDate:sv.lastDate||"",achievements:sv.achievements||[],showXp:false,xpGained:0,totalMessages:sv.totalMessages||0,totalVocab:sv.totalVocab||0,lessonsCompleted:sv.lessonsCompleted||[],friendChats:sv.friendChats||0,slangDict:sv.slangDict||[],currentLesson:null,friendScenario:"hangout",username:sv.username||"",watchUrl:"",watchVideoId:"",watchTitle:"",watchWith:"friends",videosWatched:sv.videosWatched||0,playingTts:null,translatingWord:null,translationResult:""};
-if(S.apiKey)S.screen="dashboard";
+let S={screen:sv.apiKey?"dashboard":"landing",apiKey:sv.apiKey||"",mode:"",messages:[],input:"",loading:false,feedback:[],level:sv.level||0,sideTab:"feedback",mobilePanel:false,apiError:"",theme:sv.theme||"light",xp:sv.xp||0,xpLevel:sv.xpLevel||1,streak:sv.streak||0,lastDate:sv.lastDate||"",achievements:sv.achievements||[],showXp:false,xpGained:0,totalMessages:sv.totalMessages||0,totalVocab:sv.totalVocab||0,lessonsCompleted:sv.lessonsCompleted||[],friendChats:sv.friendChats||0,slangDict:sv.slangDict||[],currentLesson:null,friendScenario:"hangout",username:sv.username||"",watchUrl:"",watchVideoId:"",watchTitle:"",watchWith:"friends",videosWatched:sv.videosWatched||0,playingTts:null,translatingWord:null,translationResult:"",quizStep:0,quizScore:0,onbStep:0,showOnb:false,dailyDone:sv.dailyDone||"",dailyIdx:Math.floor(Date.now()/864e5)%DAILIES.length};
 document.documentElement.setAttribute("data-theme",S.theme);
 
-function save(){try{localStorage.setItem("lf3",JSON.stringify({apiKey:S.apiKey,xp:S.xp,xpLevel:S.xpLevel,streak:S.streak,lastDate:S.lastDate,achievements:S.achievements,totalMessages:S.totalMessages,totalVocab:S.totalVocab,lessonsCompleted:S.lessonsCompleted,friendChats:S.friendChats,slangDict:S.slangDict,theme:S.theme,username:S.username,videosWatched:S.videosWatched}))}catch(e){}}
+function save(){try{localStorage.setItem("lf3",JSON.stringify({apiKey:S.apiKey,xp:S.xp,xpLevel:S.xpLevel,streak:S.streak,lastDate:S.lastDate,achievements:S.achievements,totalMessages:S.totalMessages,totalVocab:S.totalVocab,lessonsCompleted:S.lessonsCompleted,friendChats:S.friendChats,slangDict:S.slangDict,theme:S.theme,username:S.username,videosWatched:S.videosWatched,level:S.level,dailyDone:S.dailyDone}))}catch(e){}}
 function set(u){Object.assign(S,u);render();save()}
 function checkStreak(){const t=new Date().toISOString().slice(0,10);if(S.lastDate===t)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.lastDate===y?S.streak++:S.streak=1;S.lastDate=t;checkAch();save()}
 function addXp(n){S.xp+=n;S.xpGained=n;S.showXp=true;const nd=S.xpLevel*100;while(S.xp>=nd){S.xp-=nd;S.xpLevel++}save();render();setTimeout(()=>{S.showXp=false;render()},1500)}
 function checkAch(){const u=new Set(S.achievements);if(S.totalMessages>=1)u.add("first_msg");if(S.streak>=3)u.add("streak_3");if(S.totalVocab>=10)u.add("vocab_10");if(S.totalVocab>=50)u.add("vocab_50");if(S.slangDict.length>=10)u.add("slang_10");if(S.lessonsCompleted.length>=3)u.add("lesson_3");if(S.friendChats>=5)u.add("friends_5");if(S.videosWatched>=3)u.add("watch_3");S.achievements=[...u];save()}
 function speak(t){if(S.playingTts){speechSynthesis.cancel();S.playingTts=null;render();return}const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;u.onend=()=>{S.playingTts=null;render()};u.onerror=()=>{S.playingTts=null;render()};S.playingTts=t;render();speechSynthesis.speak(u)}
 async function translateWord(w){S.translatingWord=w;S.translationResult="...";render();try{S.translationResult=await api([{role:"user",content:`Translate "${w}" to Portuguese. ONLY the translation.`}],"Translator. ONLY translation.")}catch(e){S.translationResult="Erro"}render();setTimeout(()=>{S.translatingWord=null;render()},3000)}
-async function api(msgs,sys){const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6-20250725",max_tokens:1200,system:sys,messages:msgs})});if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`Erro ${r.status}`)}const d=await r.json();return d.content?.map(c=>c.text||"").join("")||""}
+async function api(msgs,sys){const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1200,system:sys,messages:msgs})});if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`Erro ${r.status}`)}const d=await r.json();return d.content?.map(c=>c.text||"").join("")||""}
 
 function teacherP(){const l=S.currentLesson?LESSONS.find(x=>x.id===S.currentLesson):null;return`You are Mr. James, a friendly American English teacher for Brazilian students. Level: ${LVS[S.level]}.${l?` LESSON: "${l.title}" — teach: ${l.topic}.`:""}\nUse [WHITEBOARD]...[/WHITEBOARD] for grammar. Inside use [FORMAL]text[/FORMAL] and [REAL]text[/REAL]. Add [CULTURE]...[/CULTURE] for cultural notes.\nAfter response add "---DATA---" then JSON:\n{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"gonna","meaning":"going to","example":"I'm gonna go","formal":"I am going to go"}],"culturalNote":"Portuguese insight"}`}
 function friendsP(){const sc=FSCENES.find(x=>x.id===S.friendScenario);return`Simulate a group chat with 3 American friends helping a Brazilian practice English.\nJake: ${FR[0].style}\nMia: ${FR[1].style}\nTyler: ${FR[2].style}\nSCENARIO: ${sc.p}\nFORMAT each response as:\n😎 Jake: [msg]\n💅 Mia: [msg]\n🎮 Tyler: [msg]\nNot all 3 need to respond every time. Use REAL casual English, slang, abbreviations. Correct mistakes naturally.\nAfter response add "---DATA---" then JSON:\n{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"ngl","meaning":"not gonna lie","example":"ngl that was fire","formal":"To be honest, that was amazing"}],"culturalNote":"Portuguese note"}`}
@@ -268,7 +327,7 @@ function startFree(){set({screen:"chat",mode:"free",messages:[{role:"assistant",
 function startWatch(vid,title){S.videosWatched++;checkAch();save();const g=S.watchWith==="friends"?{content:"😎 Jake: yooo we watching this? let's gooo 🔥\n💅 Mia: omg yes!! watch party!\n🎮 Tyler: alright let's see if it's good",parsed:[{friend:"jake",text:"yooo we watching this? let's gooo 🔥"},{friend:"mia",text:"omg yes!! watch party!"},{friend:"tyler",text:"alright let's see if it's good"}]}:{content:`Welcome to Watch & Learn! 👨‍🏫\n\nAs you watch, tell me:\n• Words or phrases you hear\n• Anything you don't understand\n\nI'll explain everything!`};set({screen:"chat",mode:"watch",watchVideoId:vid||"",watchTitle:title||"",messages:[{role:"assistant",...g}],feedback:[],sideTab:"slang",mobilePanel:false})}
 function loadVideo(){const url=S.watchUrl.trim();if(!url)return;const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);if(!m){alert("Cole um link válido do YouTube.");return}S.watchVideoId=m[1];S.watchTitle=url;S.videosWatched++;checkAch();save();render()}
 function goToDash(){set({screen:"dashboard"})}
-function saveKey(){const k=S.apiKey.trim();if(!k.startsWith("sk-ant-")){set({apiError:"A chave deve começar com sk-ant-..."});return}set({screen:"dashboard",apiError:""});save()}
+function saveKey(){const k=S.apiKey.trim();if(!k.startsWith("sk-ant-")){set({apiError:"A chave deve começar com sk-ant-..."});return}set({screen:S.totalMessages>0?"dashboard":"quiz",apiError:"",quizStep:0,quizScore:0});save()}
 function toggleTheme(){S.theme=S.theme==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();render()}
 function esc(s){return s?String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"):""}
 function rw(t){return t.split(/(\s+)/).map(w=>{const c=w.replace(/[.,!?;:"""''()\[\]{}]/g,"").trim();if(!c)return esc(w);return`<span class="word-cl" onclick="translateWord('${c.replace(/'/g,"\\'")}')">${esc(w)}</span>`}).join("")}
@@ -284,10 +343,54 @@ $("api-key").addEventListener("input",e=>{S.apiKey=e.target.value});$("api-key")
 
 const tb=`<button class="btn-i corner-btn" onclick="toggleTheme()" title="Tema">${S.theme==="dark"?"☀️":"🌙"}</button>`;
 
+// LANDING
+if(S.screen==="landing"){a.innerHTML=`<div class="landing">
+<div class="land-hero ani">
+<div class="land-logo"><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="#fff"/></svg></div>
+<h1 class="land-h1">Aprenda inglês<br>como <em>americano fala</em></h1>
+<p class="land-p">Converse com IA, aprenda gírias reais, assista vídeos com amigos virtuais e tenha aulas com um professor particular — tudo em um só lugar.</p>
+<button class="btn btn-p land-cta" id="land-start">Começar agora</button>
+</div>
+<div class="land-feats ani">
+<div class="lf"><div class="lf-icon">👨‍🏫</div><div class="lf-title">Professor particular</div><div class="lf-desc">Mr. James explica gramática com quadro branco e compara inglês formal com o que americanos realmente falam.</div></div>
+<div class="lf"><div class="lf-icon">👥</div><div class="lf-title">Amigos americanos</div><div class="lf-desc">Chat com Jake, Mia e Tyler — cheio de gírias, abreviações e referências culturais reais.</div></div>
+<div class="lf"><div class="lf-icon">🎬</div><div class="lf-title">Watch Party</div><div class="lf-desc">Assista vídeos do YouTube enquanto seus amigos ou professor explicam tudo em tempo real.</div></div>
+<div class="lf"><div class="lf-icon">🔥</div><div class="lf-title">Dicionário de gírias</div><div class="lf-desc">Cada gíria que você aprende é salva com significado, exemplo e versão formal.</div></div>
+<div class="lf"><div class="lf-icon">📊</div><div class="lf-title">Teste de nível</div><div class="lf-desc">Quiz rápido para descobrir seu nível e adaptar todo o conteúdo para você.</div></div>
+<div class="lf"><div class="lf-icon">🎯</div><div class="lf-title">Desafio diário</div><div class="lf-desc">Uma missão por dia para manter seu streak e ganhar XP extra.</div></div>
+</div>
+<div class="land-footer">LinguaFlow · Aprenda inglês de verdade</div>
+</div>`;
+$("land-start").addEventListener("click",()=>set({screen:"setup"}));return}
+
+// QUIZ
+if(S.screen==="quiz"){const q=QUIZ[S.quizStep];if(!q){
+  // Quiz done — calculate level
+  let lv=0;if(S.quizScore>=4)lv=3;else if(S.quizScore>=3)lv=2;else if(S.quizScore>=2)lv=1;
+  a.innerHTML=`<div class="quiz"><div class="quiz-box ani" style="text-align:center"><div style="font-size:48px;margin-bottom:12px">🎉</div><h2 style="font-family:'Newsreader',serif;font-size:24px;margin-bottom:8px">Teste concluído!</h2><p style="color:var(--mt);font-size:14px;margin-bottom:16px">Você acertou ${S.quizScore} de ${QUIZ.length} questões</p><div style="font-size:28px;font-weight:700;color:${LCOL[lv]};margin-bottom:4px">${LVS[lv]}</div><p style="font-size:13px;color:var(--mt);margin-bottom:24px">Vamos adaptar tudo ao seu nível</p><button class="btn btn-p" style="padding:14px 40px;font-size:15px" id="quiz-done">Continuar</button></div></div>`;
+  $("quiz-done").addEventListener("click",()=>set({screen:"dashboard",level:lv,showOnb:true,onbStep:0}));return}
+a.innerHTML=`<div class="quiz"><div class="quiz-box ani">
+<div style="font-size:12px;color:var(--mt);margin-bottom:4px;font-weight:500">Teste de Nível</div>
+<div class="quiz-prog">${QUIZ.map((x,i)=>`<div class="qp ${i<S.quizStep?"done":""} ${i===S.quizStep?"cur":""}"></div>`).join("")}</div>
+<div class="quiz-q">${q.q}</div>
+<div class="quiz-opts">${q.opts.map((o,i)=>`<button class="qo" data-qi="${i}">${esc(o)}</button>`).join("")}</div>
+</div></div>`;
+document.querySelectorAll("[data-qi]").forEach(b=>b.addEventListener("click",()=>{
+  const i=+b.dataset.qi;const correct=i===QUIZ[S.quizStep].ans;
+  S.quizScore+=correct?1:0;S.quizStep++;render()
+}));return}
+
 // DASHBOARD
 if(S.screen==="dashboard"){const nm=S.username||"Estudante",xpN=S.xpLevel*100;
-a.innerHTML=`${tb}<div class="dash"><div class="dash-c">
+const today=new Date().toISOString().slice(0,10);const dailyDone=S.dailyDone===today;const dc=DAILIES[S.dailyIdx];
+a.innerHTML=`${tb}
+${S.showOnb?`<div class="onb-ov" id="onb-ov"><div class="onb-card"><div class="onb-icon">${ONB_STEPS[S.onbStep].icon}</div><div class="onb-title">${ONB_STEPS[S.onbStep].title}</div><div class="onb-desc">${ONB_STEPS[S.onbStep].desc}</div><div class="onb-dots">${ONB_STEPS.map((x,i)=>`<div class="onb-dot ${i===S.onbStep?'on':''}"></div>`).join("")}</div><div style="display:flex;gap:8px;justify-content:center">${S.onbStep>0?`<button class="btn btn-g btn-s" id="onb-prev">Voltar</button>`:""}<button class="btn btn-p btn-s" id="onb-next">${S.onbStep<ONB_STEPS.length-1?"Próximo":"Vamos lá!"}</button></div></div></div>`:""}
+<div class="dash"><div class="dash-c">
 <div class="ani" style="padding:28px 0 20px"><div class="dash-hi">Hey, ${esc(nm)} 👋</div><div class="dash-sub">Escolha como quer praticar hoje</div>${progH(S.xp,xpN,"var(--ac)",`Nível ${S.xpLevel} · ${S.xp} / ${xpN} XP`)}</div>
+
+${!dailyDone?`<div class="daily ani"><div class="daily-badge">Desafio do dia</div><div class="daily-title">${dc.title}</div><div class="daily-desc">${dc.desc}</div><div style="display:flex;justify-content:space-between;align-items:center"><div class="daily-reward">+${dc.reward} XP</div><button class="btn btn-p btn-s" id="daily-go">Começar</button></div></div>`:
+`<div class="card ani" style="text-align:center;margin-bottom:20px;padding:14px"><span style="color:var(--pos);font-weight:600">✓ Desafio do dia concluído!</span></div>`}
+
 ${S.streak>0?`<div class="streak-card ani"><div class="streak-num">${S.streak}</div><div><div class="streak-label" style="font-weight:700">dia${S.streak>1?"s":""} seguido${S.streak>1?"s":""} 🔥</div><div style="font-size:12px;opacity:.7">Continue para manter seu streak</div></div></div>`:""}
 <div class="stats-row ani">${[{v:S.totalVocab,l:"Palavras",c:"var(--ac)"},{v:S.slangDict.length,l:"Gírias",c:"var(--warn)"},{v:S.totalMessages,l:"Mensagens",c:"#EC4899"},{v:S.achievements.length,l:"Conquistas",c:"var(--pos)"}].map(s=>`<div class="stat-card"><div class="stat-val" style="color:${s.c}">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join("")}</div>
 
@@ -313,6 +416,11 @@ ${S.slangDict.length?`<div class="section-title ani">🔥 Gírias recentes</div>
 $("mc-t").addEventListener("click",()=>startTeacher());$("mc-f").addEventListener("click",()=>startFriends());$("mc-w").addEventListener("click",()=>startWatch("",""));$("mc-fr").addEventListener("click",startFree);
 document.querySelectorAll("[data-ls]").forEach(b=>b.addEventListener("click",()=>startTeacher(+b.dataset.ls)));
 document.querySelectorAll("[data-vid]").forEach(b=>b.addEventListener("click",()=>startWatch(b.dataset.vid,b.dataset.vt)));
+// Onboarding
+$("onb-next")?.addEventListener("click",()=>{if(S.onbStep<ONB_STEPS.length-1)set({onbStep:S.onbStep+1});else set({showOnb:false})});
+$("onb-prev")?.addEventListener("click",()=>{if(S.onbStep>0)set({onbStep:S.onbStep-1})});
+// Daily challenge
+$("daily-go")?.addEventListener("click",()=>{const dc=DAILIES[S.dailyIdx];S.dailyDone=new Date().toISOString().slice(0,10);addXp(dc.reward);save();if(dc.action==="friends")startFriends();else if(dc.action==="teacher")startTeacher();else if(dc.action==="watch")startWatch("","");else startFree()});
 return}
 
 // ═════ CHAT ═════
