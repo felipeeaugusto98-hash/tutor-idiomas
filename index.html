@@ -1,506 +1,393 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>LinguaFlow — Aprenda Inglês de Verdade</title>
+<title>LinguaFlow</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#08080f;--bg2:#0e0e1a;--sf:rgba(255,255,255,.035);--sf2:rgba(255,255,255,.065);--sf3:rgba(255,255,255,.1);--bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.12);--tx:#e8eaf0;--tx2:#c1c5d0;--mt:#5a6078;--ac:#7c6aed;--ac2:#6352d4;--acg:rgba(124,106,237,.15);--pos:#2dd4a0;--posbg:rgba(45,212,160,.08);--warn:#f5b638;--warnbg:rgba(245,182,56,.08);--err:#ef6461;--errbg:rgba(239,100,97,.08);--xp:#f5b638;--streak:#ef6461;--track:rgba(255,255,255,.04);--ubbl:linear-gradient(135deg,#6352d4,#7c6aed);--abbl:rgba(255,255,255,.05);--r:14px;--rs:10px;--rx:8px}
-[data-theme="light"]{--bg:#f5f4f8;--bg2:#eeedf3;--sf:rgba(0,0,0,.03);--sf2:rgba(0,0,0,.06);--sf3:rgba(0,0,0,.09);--bd:rgba(0,0,0,.08);--bd2:rgba(0,0,0,.12);--tx:#1a1a2e;--tx2:#3a3a5c;--mt:#8888a8;--ac:#6352d4;--ac2:#5242b8;--acg:rgba(99,82,212,.1);--pos:#16a878;--posbg:rgba(22,168,120,.08);--warn:#d49a12;--warnbg:rgba(212,154,18,.08);--err:#d44040;--errbg:rgba(212,64,64,.08);--track:rgba(0,0,0,.04);--ubbl:linear-gradient(135deg,#6352d4,#7c6aed);--abbl:rgba(0,0,0,.04)}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-body.no-scroll{overflow:hidden}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--sf3);border-radius:10px}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
-@keyframes xpPop{0%{transform:scale(0);opacity:0}50%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
-@keyframes streakFire{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@keyframes typing{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
-.ani{animation:fadeIn .35s ease-out}
- 
-/* Components */
-.btn{padding:10px 18px;border:none;border-radius:var(--rs);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.btn-p{background:linear-gradient(135deg,var(--ac2),var(--ac));color:#fff}.btn-p:hover{opacity:.9;transform:translateY(-1px)}
-.btn-g{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}.btn-g:hover{background:var(--sf2)}
-.btn-s{padding:6px 12px;font-size:11px;border-radius:var(--rx)}
-.btn-i{width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:var(--rx);background:var(--sf);border:1px solid var(--bd);cursor:pointer;color:var(--tx);font-size:16px;transition:all .2s}.btn-i:hover{background:var(--sf2)}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:600}
-.badge-xp{background:rgba(245,182,56,.12);color:var(--xp)}.badge-streak{background:rgba(239,100,97,.12);color:var(--streak)}
-.input{padding:10px 14px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--sf);color:var(--tx);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;width:100%}.input:focus{border-color:var(--ac)}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
-.prog-track{background:var(--track);border-radius:99px;overflow:hidden;height:6px}.prog-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
- 
-/* Setup */
-.setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:20px}
-.setup::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(124,106,237,.06),transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(45,212,160,.04),transparent 50%);pointer-events:none}
-.setup-box{background:var(--sf);border:1px solid var(--bd);border-radius:20px;padding:36px 28px;max-width:440px;width:100%;position:relative;backdrop-filter:blur(20px)}
-.setup-box h1{font-family:'Fraunces',serif;font-size:26px;text-align:center;color:var(--tx)}.brand{color:var(--ac);font-style:italic}
-.setup-box .sub{text-align:center;color:var(--mt);font-size:13px;margin-bottom:24px}
-.setup-box label{font-size:11px;color:var(--mt);display:block;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
-.hint{font-size:11px;color:var(--mt);margin-top:8px;line-height:1.6}.hint a{color:var(--ac);text-decoration:none}
-.err-msg{color:var(--err);font-size:11px;margin-top:6px}
- 
-/* Dashboard */
-.dash{min-height:100vh;background:var(--bg);padding:20px 20px 80px;overflow-y:auto}
-.dash::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,106,237,.05),transparent 60%);pointer-events:none;z-index:0}
-.dash-c{max-width:820px;margin:0 auto;position:relative;z-index:1}
-.dash-greeting{font-family:'Fraunces',serif;font-size:28px;font-weight:700;text-align:center;margin-bottom:6px}
-.dash-sub{text-align:center;color:var(--mt);font-size:13px;margin-bottom:20px}
-.streak-banner{background:linear-gradient(135deg,rgba(239,100,97,.1),rgba(245,182,56,.1));border:1px solid rgba(239,100,97,.15);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.streak-fire{font-size:36px;animation:streakFire 1.5s ease-in-out infinite}
-.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
-.d-stat{text-align:center;padding:16px 8px;border-radius:var(--r);background:var(--sf);border:1px solid var(--bd)}
-.d-stat .icon{font-size:22px;margin-bottom:4px}.d-stat .val{font-size:22px;font-weight:700}.d-stat .lbl{font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:.5px}
- 
+
+/* ─── Palette ─── */
+:root{
+  --bg:#F7F7F8;--bg2:#FFFFFF;--bg3:#F0F0F2;
+  --tx:#1A1A2E;--tx2:#4A4A68;--mt:#9CA3B0;
+  --bd:#E8E8ED;--bd2:#D1D1D9;
+  --ac:#4F46E5;--ac2:#4338CA;--acl:rgba(79,70,229,.06);--acl2:rgba(79,70,229,.1);
+  --pos:#059669;--posl:rgba(5,150,105,.06);
+  --warn:#D97706;--warnl:rgba(217,119,6,.06);
+  --err:#DC2626;--errl:rgba(220,38,38,.06);
+  --xp:#D97706;--streak:#DC2626;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-lg:0 4px 24px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+  --r:16px;--rs:12px;--rx:8px;
+}
+[data-theme="dark"]{
+  --bg:#111119;--bg2:#1A1A26;--bg3:#222232;
+  --tx:#E8E8F0;--tx2:#A0A0B8;--mt:#606078;
+  --bd:#2A2A3A;--bd2:#3A3A4A;
+  --acl:rgba(99,102,241,.1);--acl2:rgba(99,102,241,.16);
+  --posl:rgba(16,185,129,.1);--warnl:rgba(245,158,11,.1);--errl:rgba(239,68,68,.1);
+  --shadow:0 1px 3px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.15);
+  --shadow-lg:0 4px 24px rgba(0,0,0,.3);--shadow-sm:0 1px 2px rgba(0,0,0,.15);
+}
+
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.6}
+body.lock{overflow:hidden}
+::selection{background:var(--acl2);color:var(--ac)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:99px}::-webkit-scrollbar-thumb:hover{background:var(--bd2)}
+
+/* ─── Animations ─── */
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes xpPop{0%{transform:scale(0) translateX(-50%);opacity:0}60%{transform:scale(1.15) translateX(-50%)}100%{transform:scale(1) translateX(-50%);opacity:1}}
+@keyframes dotBounce1{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+@keyframes dotBounce2{0%,80%,100%{transform:scale(0)}50%{transform:scale(1)}}
+@keyframes dotBounce3{0%,80%,100%{transform:scale(0)}60%{transform:scale(1)}}
+.ani{animation:up .5s cubic-bezier(.16,1,.3,1) both}
+
+/* ─── Components ─── */
+.btn{padding:10px 20px;border:none;border-radius:var(--rx);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:6px;letter-spacing:-.01em}
+.btn-p{background:var(--ac);color:#fff;box-shadow:0 1px 2px rgba(79,70,229,.2)}.btn-p:hover{background:var(--ac2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,.25)}
+.btn-g{background:var(--bg2);color:var(--tx);border:1px solid var(--bd);box-shadow:var(--shadow-sm)}.btn-g:hover{border-color:var(--bd2);box-shadow:var(--shadow)}
+.btn-s{padding:7px 14px;font-size:12px}
+.btn-i{width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:var(--rx);background:var(--bg2);border:1px solid var(--bd);cursor:pointer;color:var(--tx2);font-size:15px;transition:all .2s;box-shadow:var(--shadow-sm)}.btn-i:hover{border-color:var(--bd2);box-shadow:var(--shadow);color:var(--tx)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:-.01em}
+.badge-xp{background:var(--warnl);color:var(--warn)}.badge-streak{background:var(--errl);color:var(--err)}
+.input{padding:11px 14px;border-radius:var(--rx);border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font-size:14px;font-family:inherit;outline:none;transition:all .2s;width:100%;box-shadow:var(--shadow-sm)}.input:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--acl)}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);transition:all .25s}
+.card:hover{box-shadow:var(--shadow-lg)}
+.tab-bar{display:flex;gap:2px;padding:6px;background:var(--bg3);border-radius:var(--rs);margin:0}
+.tab{flex:1;padding:8px 4px;border:none;background:none;cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;border-radius:var(--rx);color:var(--mt);transition:all .2s}.tab.active{background:var(--bg2);color:var(--tx);box-shadow:var(--shadow-sm)}
+.prog-track{background:var(--bg3);border-radius:99px;overflow:hidden;height:6px}.prog-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.16,1,.3,1)}
+
+/* ─── Avatars ─── */
+.avatar{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;color:#fff;letter-spacing:-.02em;position:relative;overflow:hidden}
+.avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);border-radius:inherit}
+.av-jake{background:linear-gradient(135deg,#EF4444,#F97316)}.av-mia{background:linear-gradient(135deg,#EC4899,#A855F7)}
+.av-tyler{background:linear-gradient(135deg,#10B981,#06B6D4)}.av-teacher{background:linear-gradient(135deg,#3B82F6,#6366F1)}
+.av-sm{width:28px;height:28px;border-radius:8px;font-size:11px}
+
+/* ─── Setup ─── */
+.setup{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
+.setup-box{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:40px 32px;max-width:420px;width:100%;box-shadow:var(--shadow-lg)}
+.setup-box h1{font-family:'Newsreader',serif;font-size:28px;text-align:center;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.setup-box .sub{text-align:center;color:var(--mt);font-size:13px;margin-bottom:28px}
+.setup-box label{font-size:11px;color:var(--mt);display:block;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.hint{font-size:12px;color:var(--mt);margin-top:8px;line-height:1.6}.hint a{color:var(--ac);text-decoration:none;font-weight:500}
+.err-msg{color:var(--err);font-size:12px;margin-top:6px}
+
+/* ─── Dashboard ─── */
+.dash{min-height:100vh;background:var(--bg);padding:24px 20px 80px}
+.dash-c{max-width:780px;margin:0 auto}
+.dash-hi{font-family:'Newsreader',serif;font-size:32px;font-weight:600;letter-spacing:-.03em;margin-bottom:4px}
+.dash-sub{color:var(--mt);font-size:14px;margin-bottom:20px}
+.streak-card{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:1px solid #FCD34D;border-radius:var(--r);padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:20px;color:#92400E}
+[data-theme="dark"] .streak-card{background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(245,158,11,.08));border-color:rgba(251,191,36,.2);color:#FCD34D}
+.streak-num{font-size:36px;font-weight:800;line-height:1}.streak-label{font-size:13px;font-weight:500}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stat-val{font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:2px}.stat-lbl{font-size:11px;color:var(--mt);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+
 /* Mode Cards */
-.mode-cards{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
-.mode-card{padding:24px 20px;border-radius:var(--r);border:1px solid var(--bd);cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.mode-card:hover{transform:translateY(-3px);border-color:var(--bd2)}
-.mode-card .mc-badge{position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:99px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.mode-card .mc-icon{font-size:36px;margin-bottom:10px}
-.mode-card .mc-title{font-size:18px;font-weight:700;margin-bottom:4px}
-.mode-card .mc-desc{font-size:12px;color:var(--mt);line-height:1.5}
-.mode-card .mc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.mode-card .mc-tag{padding:3px 8px;border-radius:99px;font-size:9px;background:var(--sf2);color:var(--tx2)}
-.mc-teacher{background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(124,106,237,.05))}.mc-teacher:hover{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(124,106,237,.1))}
-.mc-friends{background:linear-gradient(135deg,rgba(239,100,97,.08),rgba(245,182,56,.05))}.mc-friends:hover{background:linear-gradient(135deg,rgba(239,100,97,.15),rgba(245,182,56,.1))}
-.mc-free{background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(124,106,237,.05))}.mc-free:hover{background:linear-gradient(135deg,rgba(45,212,160,.15),rgba(124,106,237,.1))}
- 
-/* Chat */
-.app{display:flex;height:100vh;width:100%}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.mc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:24px 20px;cursor:pointer;transition:all .3s;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.mc:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--bd2)}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.mc-teacher::before{background:linear-gradient(90deg,#3B82F6,#6366F1)}
+.mc-friends::before{background:linear-gradient(90deg,#EF4444,#F97316)}
+.mc-watch::before{background:linear-gradient(90deg,#EC4899,#A855F7)}
+.mc-free::before{background:linear-gradient(90deg,#10B981,#06B6D4)}
+.mc-icon{margin-bottom:12px}
+.mc-title{font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-.02em}
+.mc-desc{font-size:12px;color:var(--mt);line-height:1.5;margin-bottom:10px}
+.mc-tags{display:flex;gap:4px;flex-wrap:wrap}
+.mc-tag{padding:3px 8px;border-radius:99px;font-size:10px;font-weight:500;background:var(--bg3);color:var(--tx2)}
+.mc-badge{position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:99px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:var(--acl);color:var(--ac)}
+
+/* Suggested Videos */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:28px}
+.vid-card{border-radius:var(--rs);overflow:hidden;border:1px solid var(--bd);cursor:pointer;transition:all .25s;background:var(--bg2);box-shadow:var(--shadow-sm)}
+.vid-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.vid-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.vid-info{padding:10px 12px}
+.vid-title{font-size:12px;font-weight:600;line-height:1.4;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;letter-spacing:-.01em}
+.vid-cat{font-size:10px;color:var(--mt);font-weight:500}
+
+/* Lesson Cards */
+.lesson-list{display:flex;flex-direction:column;gap:6px;margin-bottom:28px}
+.lesson-c{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--rs);background:var(--bg2);border:1px solid var(--bd);cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm)}
+.lesson-c:hover{box-shadow:var(--shadow);border-color:var(--bd2)}
+.lesson-n{width:28px;height:28px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--tx2);flex-shrink:0}.lesson-n.done{background:var(--pos);color:#fff}
+.lesson-t{font-size:13px;font-weight:600;letter-spacing:-.01em}.lesson-d{font-size:11px;color:var(--mt)}
+
+/* Achievements */
+.ach-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:24px;-webkit-overflow-scrolling:touch}
+.ach{flex-shrink:0;width:72px;text-align:center;padding:12px 6px;border-radius:var(--rs);background:var(--bg2);border:1px solid var(--bd);font-size:9px;color:var(--mt);line-height:1.3;box-shadow:var(--shadow-sm);transition:all .2s}
+.ach .ach-icon{font-size:22px;display:block;margin-bottom:4px;filter:grayscale(1);opacity:.4;transition:all .3s}
+.ach.on{border-color:var(--warn);color:var(--tx)}.ach.on .ach-icon{filter:none;opacity:1;animation:float 3s ease-in-out infinite}
+
+/* ─── Chat Layout ─── */
+.app{display:flex;height:100vh;width:100%;background:var(--bg)}
 .chat-area{flex:1;display:flex;flex-direction:column;min-width:0}
-.c-header{padding:10px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--sf);flex-shrink:0}
-.h-left{display:flex;align-items:center;gap:10px}
-.h-info .h-title{font-weight:600;font-size:14px}.h-info .h-sub{font-size:10px;color:var(--mt);display:flex;align-items:center;gap:5px}
-.h-right{display:flex;align-items:center;gap:6px}
-.scenario-sel{padding:5px 8px;border-radius:var(--rx);border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:11px;font-family:inherit;cursor:pointer;outline:none}
- 
-.msgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-.msg-row{display:flex;animation:fadeIn .3s ease-out;align-items:flex-end;gap:8px}.msg-row.user{justify-content:flex-end}.msg-row.bot{justify-content:flex-start}
-.msg-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--sf2);border:1px solid var(--bd)}
-.msg-col{max-width:78%;display:flex;flex-direction:column;gap:2px}
-.msg-name{font-size:9px;font-weight:600;color:var(--mt);padding-left:4px;text-transform:uppercase;letter-spacing:.5px}
-.msg-bbl{padding:10px 14px;font-size:13px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
-.msg-row.user .msg-bbl{background:var(--ubbl);color:#fff;border-radius:18px 18px 4px 18px}
-.msg-row.bot .msg-bbl{background:var(--abbl);border-radius:18px 18px 18px 4px}
-.msg-acts{display:flex;gap:4px;margin-top:2px;padding-left:4px}
-.tts-btn{background:none;border:none;cursor:pointer;font-size:12px;opacity:.4;transition:opacity .2s;padding:2px}.tts-btn:hover{opacity:1}.tts-btn.playing{opacity:1;animation:pulse 1s infinite}
-.word-cl{cursor:pointer;border-bottom:1px dashed transparent;transition:all .15s}.word-cl:hover{border-bottom-color:var(--ac);background:var(--acg)}
- 
-/* Friend-specific bubble colors */
-.bbl-jake{background:linear-gradient(135deg,rgba(239,100,97,.12),rgba(239,100,97,.05))!important;border:1px solid rgba(239,100,97,.1)}
-.bbl-mia{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(236,72,153,.05))!important;border:1px solid rgba(236,72,153,.1)}
-.bbl-tyler{background:linear-gradient(135deg,rgba(45,212,160,.12),rgba(45,212,160,.05))!important;border:1px solid rgba(45,212,160,.1)}
-.bbl-teacher{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(59,130,246,.04))!important;border:1px solid rgba(59,130,246,.08)}
- 
-/* Whiteboard */
-.whiteboard{margin:8px 0;padding:14px 16px;border-radius:var(--r);background:rgba(255,255,255,.03);border:1px dashed var(--bd2);font-size:12px;line-height:1.8}
-[data-theme="light"] .whiteboard{background:rgba(0,0,0,.02)}
-.wb-title{font-size:10px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.wb-example{padding:6px 10px;border-radius:var(--rx);background:var(--sf2);margin:4px 0;font-family:'Courier New',monospace}
-.wb-formal{color:var(--warn)}.wb-real{color:var(--pos)}
-.wb-vs{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin:6px 0}
-.wb-vs-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center}
- 
-/* Cultural note */
-.culture-note{margin:6px 0;padding:10px 12px;border-radius:var(--rs);background:rgba(245,182,56,.06);border-left:3px solid var(--warn);font-size:11px;line-height:1.6}
-.culture-note .cn-title{font-size:9px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
- 
-.typing-ind{padding:10px 18px;border-radius:18px 18px 18px 4px;background:var(--abbl);display:inline-flex;gap:4px;align-items:center}
-.t-dot{width:6px;height:6px;border-radius:50%;background:var(--ac)}.t-dot:nth-child(1){animation:bounce 1.2s ease-in-out 0s infinite}.t-dot:nth-child(2){animation:bounce 1.2s ease-in-out .15s infinite}.t-dot:nth-child(3){animation:bounce 1.2s ease-in-out .3s infinite}
- 
-.xp-popup{position:fixed;top:20%;left:50%;transform:translateX(-50%);z-index:999;animation:xpPop .5s ease-out;pointer-events:none}
-.xp-inner{background:linear-gradient(135deg,rgba(245,182,56,.2),rgba(245,182,56,.05));border:1px solid rgba(245,182,56,.3);border-radius:var(--r);padding:12px 24px;text-align:center;backdrop-filter:blur(12px)}
-.xp-amount{font-size:28px;font-weight:800;color:var(--xp)}.xp-label{font-size:11px;color:var(--mt)}
-.trans-bar{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);z-index:50;background:var(--tx);color:var(--bg);padding:6px 16px;border-radius:8px;font-size:13px;animation:fadeIn .2s}
- 
-.input-area{padding:10px 16px;border-top:1px solid var(--bd);background:var(--sf)}
-.input-wrap{display:flex;gap:6px;align-items:center;background:var(--bg);border-radius:var(--r);padding:4px 4px 4px 14px;border:1px solid var(--bd);transition:border-color .2s}.input-wrap:focus-within{border-color:rgba(124,106,237,.4)}
-.input-wrap input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:13px;padding:8px 0;font-family:inherit}
-.send-btn{background:var(--ac);border:none;border-radius:var(--rs);padding:8px 16px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}.send-btn:disabled{background:var(--sf2);opacity:.4;cursor:default}
- 
-/* Side Panel */
-.side{width:340px;border-left:1px solid var(--bd);display:flex;flex-direction:column;background:var(--bg2);flex-shrink:0;overflow:hidden}
-.side .tab-bar{display:flex;border-bottom:1px solid var(--bd);background:var(--sf)}.tab{flex:1;padding:10px 4px;border:none;background:none;cursor:pointer;font-size:11px;font-weight:500;font-family:inherit;border-bottom:2px solid transparent;color:var(--mt);transition:all .2s}.tab.active{border-bottom-color:var(--ac);color:var(--tx)}
-.side-c{flex:1;overflow-y:auto;padding:14px}
- 
+.c-header{padding:12px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg2);flex-shrink:0}
+.h-left{display:flex;align-items:center;gap:12px}
+.h-title{font-weight:700;font-size:15px;letter-spacing:-.02em}.h-sub{font-size:11px;color:var(--mt);font-weight:500}
+.h-right{display:flex;align-items:center;gap:8px}
+.sel{padding:7px 10px;border-radius:var(--rx);border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font-size:12px;font-family:inherit;cursor:pointer;outline:none;box-shadow:var(--shadow-sm)}
+
+/* Messages */
+.msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.msg-row{display:flex;gap:10px;animation:up .4s cubic-bezier(.16,1,.3,1) both}
+.msg-row.user{justify-content:flex-end}
+.msg-col{max-width:72%;display:flex;flex-direction:column;gap:3px}
+.msg-name{font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding-left:2px}
+.msg-bbl{padding:12px 16px;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.msg-row.user .msg-bbl{background:var(--ac);color:#fff;border-radius:20px 20px 4px 20px;box-shadow:0 2px 8px rgba(79,70,229,.15)}
+.msg-row:not(.user) .msg-bbl{background:var(--bg2);border:1px solid var(--bd);border-radius:20px 20px 20px 4px;box-shadow:var(--shadow-sm)}
+.bbl-jake{border-color:rgba(239,68,68,.15)!important;background:linear-gradient(135deg,rgba(239,68,68,.03),var(--bg2))!important}
+.bbl-mia{border-color:rgba(236,72,153,.15)!important;background:linear-gradient(135deg,rgba(236,72,153,.03),var(--bg2))!important}
+.bbl-tyler{border-color:rgba(16,185,129,.15)!important;background:linear-gradient(135deg,rgba(16,185,129,.03),var(--bg2))!important}
+.bbl-teacher{border-color:rgba(59,130,246,.15)!important;background:linear-gradient(135deg,rgba(59,130,246,.03),var(--bg2))!important}
+.msg-acts{display:flex;gap:4px;padding-left:2px}
+.tts-btn{background:none;border:none;cursor:pointer;font-size:13px;opacity:.3;transition:all .2s;padding:2px;border-radius:4px}.tts-btn:hover{opacity:.8;background:var(--bg3)}.tts-btn.playing{opacity:1;animation:pulse 1s infinite}
+.word-cl{cursor:pointer;transition:all .15s;border-radius:2px;padding:0 1px}.word-cl:hover{background:var(--acl2);color:var(--ac)}
+
+/* Whiteboard & Culture */
+.whiteboard{margin:10px 0;padding:16px;border-radius:var(--rs);background:var(--bg3);border:1px dashed var(--bd2);font-size:13px;line-height:1.8}
+.wb-title{font-size:10px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.wb-formal{color:var(--warn);font-weight:600}.wb-real{color:var(--pos);font-weight:600}
+.culture-note{margin:8px 0;padding:12px 14px;border-radius:var(--rs);background:var(--warnl);font-size:12px;line-height:1.6}
+.cn-title{font-size:10px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+
+/* Typing */
+.typing-dots{display:inline-flex;gap:4px;padding:14px 20px;background:var(--bg2);border:1px solid var(--bd);border-radius:20px 20px 20px 4px;box-shadow:var(--shadow-sm)}
+.t-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2)}
+.t-dot:nth-child(1){animation:dotBounce1 1.4s infinite ease-in-out}.t-dot:nth-child(2){animation:dotBounce2 1.4s infinite ease-in-out}.t-dot:nth-child(3){animation:dotBounce3 1.4s infinite ease-in-out}
+
+/* XP Popup */
+.xp-pop{position:fixed;top:24%;left:50%;transform:translateX(-50%);z-index:999;animation:xpPop .5s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.xp-inner{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:16px 32px;text-align:center;box-shadow:var(--shadow-lg)}.xp-val{font-size:32px;font-weight:800;color:var(--warn);letter-spacing:-.03em}.xp-lbl{font-size:12px;color:var(--mt)}
+.trans-bar{position:absolute;bottom:72px;left:50%;transform:translateX(-50%);z-index:50;background:var(--tx);color:var(--bg);padding:8px 20px;border-radius:var(--rx);font-size:13px;animation:scaleIn .2s;box-shadow:var(--shadow-lg);font-weight:500}
+
+/* Input */
+.input-area{padding:12px 20px;border-top:1px solid var(--bd);background:var(--bg2)}
+.input-wrap{display:flex;gap:8px;align-items:center;background:var(--bg);border-radius:var(--r);padding:4px 4px 4px 16px;border:1px solid var(--bd);transition:all .2s;box-shadow:var(--shadow-sm)}.input-wrap:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px var(--acl)}
+.input-wrap input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:14px;padding:10px 0;font-family:inherit}
+.send-btn{background:var(--ac);border:none;border-radius:var(--rs);padding:10px 20px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 1px 2px rgba(79,70,229,.2)}.send-btn:hover{background:var(--ac2)}.send-btn:disabled{background:var(--bg3);color:var(--mt);box-shadow:none;cursor:default}
+
+/* ─── Side Panel ─── */
+.side{width:340px;border-left:1px solid var(--bd);display:flex;flex-direction:column;background:var(--bg);flex-shrink:0;overflow:hidden}
+.side-top{padding:12px;border-bottom:1px solid var(--bd)}
+.side-c{flex:1;overflow-y:auto;padding:16px}
+
 /* Feedback */
-.fb{padding:10px 12px;border-radius:var(--rs);margin-bottom:6px;animation:fadeIn .3s;border-left:3px solid}
-.fb.positive{background:var(--posbg);border-left-color:var(--pos)}.fb.correction{background:var(--warnbg);border-left-color:var(--warn)}.fb.culture{background:rgba(59,130,246,.06);border-left-color:#3b82f6}
-.fb-text{font-size:12px;font-weight:500}.fb-detail{font-size:11px;color:var(--mt);line-height:1.5;margin-top:3px}.fb-rule{margin-top:4px;padding:6px 8px;border-radius:var(--rx);background:var(--sf);font-size:10px;color:var(--tx2);line-height:1.5}
- 
-/* Slang dictionary */
-.slang-item{padding:10px 12px;border-radius:var(--rs);background:var(--sf);border:1px solid var(--bd);margin-bottom:6px;animation:fadeIn .3s}
-.slang-word{font-size:14px;font-weight:700;color:var(--ac)}.slang-pron{font-size:10px;color:var(--mt);font-style:italic}
-.slang-def{font-size:12px;margin-top:2px;color:var(--tx2)}.slang-ex{font-size:11px;color:var(--mt);margin-top:3px;font-style:italic;padding-left:8px;border-left:2px solid var(--bd)}
-.slang-formal{font-size:10px;color:var(--warn);margin-top:3px}
- 
-/* Goals etc */
-.goal-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--rs);background:var(--sf);border:1px solid var(--bd);margin-bottom:6px}
-.goal-chk{width:18px;height:18px;border-radius:5px;border:2px solid var(--bd);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0;transition:all .2s}.goal-chk.done{background:var(--pos);border-color:var(--pos)}
-.goal-txt{flex:1;font-size:12px}.goal-txt.done{text-decoration:line-through;opacity:.4}
-.goal-rm{background:none;border:none;color:var(--mt);cursor:pointer;font-size:13px;padding:2px;opacity:.4}.goal-rm:hover{opacity:1}
-.empty{text-align:center;padding:30px 16px;color:var(--mt)}.empty .icon{font-size:28px;margin-bottom:8px}.empty p{font-size:12px;line-height:1.6}
- 
-/* Lesson selector */
-.lesson-card{padding:12px;border-radius:var(--rs);background:var(--sf);border:1px solid var(--bd);margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
-.lesson-card:hover{background:var(--sf2);border-color:var(--bd2)}
-.lesson-num{width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.lesson-num.completed{background:var(--pos)}
-.lesson-info .l-title{font-size:12px;font-weight:600}.lesson-info .l-desc{font-size:10px;color:var(--mt)}
- 
-.corner-btn{position:fixed;top:14px;right:14px;z-index:50}
- 
+.fb{padding:12px 14px;border-radius:var(--rs);margin-bottom:8px;animation:up .3s both;border-left:3px solid;background:var(--bg2);box-shadow:var(--shadow-sm)}
+.fb.positive{border-left-color:var(--pos);background:var(--posl)}.fb.correction{border-left-color:var(--warn);background:var(--warnl)}.fb.culture{border-left-color:#3B82F6;background:rgba(59,130,246,.04)}
+.fb-tx{font-size:13px;font-weight:500;line-height:1.5}.fb-dt{font-size:12px;color:var(--mt);line-height:1.5;margin-top:4px}.fb-rule{margin-top:6px;padding:8px 10px;border-radius:var(--rx);background:var(--bg3);font-size:11px;color:var(--tx2);line-height:1.5;font-weight:500}
+
+/* Slang */
+.slang{padding:14px;border-radius:var(--rs);background:var(--bg2);border:1px solid var(--bd);margin-bottom:8px;box-shadow:var(--shadow-sm);transition:all .2s;animation:up .3s both}
+.slang:hover{box-shadow:var(--shadow)}
+.slang-word{font-size:16px;font-weight:700;color:var(--ac);letter-spacing:-.02em}
+.slang-def{font-size:13px;color:var(--tx2);margin-top:2px}.slang-ex{font-size:12px;color:var(--mt);margin-top:4px;font-style:italic;padding-left:10px;border-left:2px solid var(--bd)}
+.slang-formal{font-size:11px;color:var(--warn);margin-top:4px;font-weight:500}
+
+/* Watch */
+.watch-top{flex-shrink:0;border-bottom:1px solid var(--bd);background:#000}
+.watch-top iframe{width:100%;aspect-ratio:16/9;max-height:34vh;display:block;border:none}
+.watch-ph{aspect-ratio:16/9;max-height:34vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg3);gap:10px;padding:20px;color:var(--mt);font-size:13px;text-align:center}
+.watch-url{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--bd);background:var(--bg2)}
+.watch-toggle{display:flex;gap:4px;padding:8px 16px;border-bottom:1px solid var(--bd);background:var(--bg2);align-items:center}
+.wt-btn{padding:6px 14px;border-radius:var(--rx);border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;color:var(--mt);transition:all .2s;box-shadow:var(--shadow-sm)}.wt-btn.active{background:var(--ac);color:#fff;border-color:var(--ac);box-shadow:0 1px 3px rgba(79,70,229,.2)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--mt)}.empty p{font-size:13px;line-height:1.6;margin-top:8px}
+.section-title{font-size:13px;font-weight:700;letter-spacing:-.01em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.corner-btn{position:fixed;top:16px;right:16px;z-index:50}
+
 @media(max-width:768px){
-  .side{position:fixed;right:0;top:0;bottom:0;z-index:100;transform:translateX(100%);background:var(--bg)!important;box-shadow:-4px 0 24px rgba(0,0,0,.5)}.side.open{transform:translateX(0)}
-  .mob-toggle{display:flex!important}.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none}.mob-overlay.open{display:block}
-  .dash-stats{grid-template-columns:repeat(2,1fr)}.mode-cards{grid-template-columns:1fr}
+  .side{position:fixed;right:0;top:0;bottom:0;z-index:100;transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);background:var(--bg)!important;box-shadow:var(--shadow-lg)}.side.open{transform:translateX(0)}
+  .mob-t{display:flex!important}.mob-ov{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:99;display:none;backdrop-filter:blur(2px)}.mob-ov.open{display:block}
+  .stats-row{grid-template-columns:repeat(2,1fr)}.modes{grid-template-columns:1fr}.vid-grid{grid-template-columns:1fr 1fr}
   .h-badges{display:none!important}
 }
-@media(min-width:769px){.mob-toggle{display:none!important}.mob-overlay{display:none!important}}
+@media(min-width:769px){.mob-t{display:none!important}.mob-ov{display:none!important}}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-// ═══════ DATA ═══════
-const FRIENDS=[
-  {id:"jake",name:"Jake",emoji:"😎",color:"#ef6461",desc:"O zoeiro, fala cheio de gíria e meme",style:"Very casual bro language, uses lots of slang like 'bro','dude','lowkey','no cap','deadass','fire','bet','vibes'. Types fast, sometimes uses abbreviations like 'ngl','tbh','imo','brb','lmao'. Makes jokes. Never formal."},
-  {id:"mia",name:"Mia",emoji:"💅",color:"#ec4899",desc:"Fitness, positiva, usa muito 'literally' e 'honestly'",style:"Valley girl meets fitness influencer. Uses 'literally','honestly','I mean','like','girl/babe','slay','obsessed','iconic'. Supportive and enthusiastic. Uses emojis in text. Casual but expressive."},
-  {id:"tyler",name:"Tyler",emoji:"🎮",color:"#2dd4a0",desc:"Nerd gamer, referências de tech e cultura pop",style:"Tech/gaming nerd. Uses gaming slang like 'GG','clutch','cracked','nerf','buff','meta','W/L'. References memes, tech, movies. Sarcastic humor. Uses 'based','ratio','cope','seethe' ironically."}
-];
-const TEACHER={name:"Mr. James",emoji:"👨‍🏫",color:"#3b82f6",desc:"Professor paciente e didático"};
-const LESSONS=[
-  {id:1,title:"Present Simple & Continuous",desc:"Quando usar cada um",topic:"present simple vs present continuous, with real examples and common mistakes Brazilians make"},
-  {id:2,title:"Past Simple vs Present Perfect",desc:"A diferença que confunde todo brasileiro",topic:"past simple vs present perfect, focusing on 'already','yet','just','ever','never' and how Brazilians tend to misuse them"},
-  {id:3,title:"Phrasal Verbs do Dia a Dia",desc:"Os 20 mais usados",topic:"the 20 most common phrasal verbs in everyday American English with examples: look up, give up, come up with, figure out, etc."},
-  {id:4,title:"Preposições que Confundem",desc:"In, on, at, for, to, about",topic:"prepositions that are hardest for Portuguese speakers: in/on/at for time and place, for/to, about/on"},
-  {id:5,title:"Conditionals na Prática",desc:"If I was vs If I were",topic:"conditionals (zero, first, second, third) with real conversational examples, including the common 'if I was' vs 'if I were' debate"},
-  {id:6,title:"Modal Verbs",desc:"Can, could, should, would, might",topic:"modal verbs in everyday conversation: can/could for requests, should for advice, would for hypotheticals, might for possibility"},
-  {id:7,title:"Artigos: A, An, The",desc:"Quando usar e quando NÃO usar",topic:"definite and indefinite articles, zero article cases, common mistakes Portuguese speakers make (they tend to overuse 'the')"},
-  {id:8,title:"Reported Speech",desc:"'He said that...'",topic:"reported/indirect speech in casual conversation, not just grammar rules but how people actually report what others said"},
-];
-const FRIEND_SCENARIOS=[
-  {id:"hangout",name:"Rolê casual",icon:"🍕",prompt:"You're all hanging out at someone's apartment, watching TV, eating pizza, talking about random stuff"},
-  {id:"gaming",name:"Noite de game",icon:"🎮",prompt:"You're all playing video games online together, reacting to gameplay, trash talking, having fun"},
-  {id:"bar",name:"Happy hour",icon:"🍺",prompt:"You're at a bar/restaurant after work, talking about life, work, relationships, weekend plans"},
-  {id:"roadtrip",name:"Road trip",icon:"🚗",prompt:"You're on a road trip together, talking about music, stops, food, telling stories"},
-  {id:"gossip",name:"Fofoca",icon:"👀",prompt:"You're gossiping about friends, celebrities, drama, sharing hot takes and opinions"},
-  {id:"work",name:"Trabalho casual",icon:"💼",prompt:"You're coworkers chatting casually during lunch break about work stuff, office politics, weekend"},
-];
-const LEVELS=["Iniciante","Elementar","Intermediário","Avançado","Fluente"],LCOLORS=["#f97316","#eab308","#22c55e","#3b82f6","#a855f7"];
-const ACHS=[{id:"first_msg",icon:"🎯",name:"1ª msg"},{id:"streak_3",icon:"🔥",name:"3 dias"},{id:"vocab_10",icon:"📚",name:"10 palavras"},{id:"vocab_50",icon:"🎓",name:"50 palavras"},{id:"slang_10",icon:"🔥",name:"10 gírias"},{id:"lesson_3",icon:"📖",name:"3 aulas"},{id:"friends_5",icon:"👥",name:"5 chats"}];
- 
-// ═══════ STATE ═══════
-function loadS(){try{return JSON.parse(localStorage.getItem("lf2"))||{}}catch(e){return{}}}
-const sv=loadS();
-let S={screen:"setup",apiKey:sv.apiKey||"",mode:"",messages:[],input:"",loading:false,feedback:[],goals:[],newGoal:"",level:0,sideTab:"feedback",journal:sv.journal||[],mobilePanel:false,apiError:"",theme:sv.theme||"dark",xp:sv.xp||0,xpLevel:sv.xpLevel||1,streak:sv.streak||0,lastDate:sv.lastDate||"",achievements:sv.achievements||[],showXp:false,xpGained:0,totalMessages:sv.totalMessages||0,totalVocab:sv.totalVocab||0,lessonsCompleted:sv.lessonsCompleted||[],friendChats:sv.friendChats||0,slangDict:sv.slangDict||[],currentLesson:null,friendScenario:"hangout",username:sv.username||""};
+const FR=[{id:"jake",name:"Jake",av:"J",cls:"av-jake",color:"#EF4444",style:"Very casual bro language, uses lots of slang like 'bro','dude','lowkey','no cap','deadass','fire','bet','vibes'. Abbreviations: ngl,tbh,imo,brb,lmao. Makes jokes."},{id:"mia",name:"Mia",av:"M",cls:"av-mia",color:"#EC4899",style:"Valley girl meets fitness. Uses 'literally','honestly','I mean','like','slay','obsessed','iconic'. Supportive, uses emojis."},{id:"tyler",name:"Tyler",av:"T",cls:"av-tyler",color:"#10B981",style:"Gaming nerd. Uses 'GG','clutch','cracked','W/L','based'. References memes, tech. Sarcastic."}];
+const TEACHER={name:"Mr. James",av:"MJ",cls:"av-teacher",color:"#3B82F6"};
+const LESSONS=[{id:1,title:"Present Simple & Continuous",desc:"Quando usar cada um",topic:"present simple vs continuous with real examples and Brazilian mistakes"},{id:2,title:"Past Simple vs Present Perfect",desc:"A diferença que confunde",topic:"past simple vs present perfect with already/yet/just/ever/never"},{id:3,title:"Phrasal Verbs Essenciais",desc:"Os 20 mais usados",topic:"20 most common phrasal verbs in American English"},{id:4,title:"Preposições que Confundem",desc:"In, on, at, for, to",topic:"prepositions hardest for Portuguese speakers"},{id:5,title:"Conditionals",desc:"If I was vs If I were",topic:"conditionals with conversational examples"},{id:6,title:"Modal Verbs",desc:"Can, could, should, would",topic:"modal verbs in everyday conversation"},{id:7,title:"Artigos: A, An, The",desc:"Quando usar e quando não",topic:"articles, zero article, Portuguese speaker mistakes"},{id:8,title:"Reported Speech",desc:"He said that...",topic:"reported speech in casual conversation"}];
+const FSCENES=[{id:"hangout",name:"Rolê casual",icon:"🍕",p:"Hanging out at someone's apartment, watching TV, eating pizza"},{id:"gaming",name:"Game night",icon:"🎮",p:"Playing video games online, reacting, trash talking"},{id:"bar",name:"Happy hour",icon:"🍺",p:"At a bar after work, talking about life and weekend plans"},{id:"roadtrip",name:"Road trip",icon:"🚗",p:"On a road trip, talking about music, food, stories"},{id:"gossip",name:"Fofoca",icon:"👀",p:"Gossiping about friends, celebrities, hot takes"},{id:"work",name:"Trabalho",icon:"💼",p:"Coworkers chatting at lunch break"}];
+const VIDS=[{id:"v1",title:"How to Order Food Like an American",yt:"dQw4w9WgXcQ",cat:"Cotidiano",lv:"Iniciante"},{id:"v2",title:"10 Slang Words You Need",yt:"ZbZSe6N_BXs",cat:"Gírias",lv:"Elementar"},{id:"v3",title:"How Americans Really Talk",yt:"VVv3EjSRYbs",cat:"Pronúncia",lv:"Intermediário"},{id:"v4",title:"English with TV Series",yt:"Dd7FixvoKBw",cat:"Séries",lv:"Intermediário"},{id:"v5",title:"American vs British English",yt:"5wSw3IWRJa0",cat:"Cultura",lv:"Elementar"},{id:"v6",title:"Job Interview English",yt:"naIkpQ_cIt0",cat:"Profissional",lv:"Intermediário"}];
+const LVS=["Iniciante","Elementar","Intermediário","Avançado","Fluente"],LCOL=["#F97316","#EAB308","#22C55E","#3B82F6","#A855F7"];
+const ACHS=[{id:"first_msg",icon:"🎯",n:"1ª msg"},{id:"streak_3",icon:"🔥",n:"3 dias"},{id:"vocab_10",icon:"📚",n:"10 palavras"},{id:"vocab_50",icon:"🎓",n:"50 palavras"},{id:"slang_10",icon:"💥",n:"10 gírias"},{id:"lesson_3",icon:"📖",n:"3 aulas"},{id:"friends_5",icon:"👥",n:"5 chats"},{id:"watch_3",icon:"🎬",n:"3 vídeos"}];
+
+function ld(){try{return JSON.parse(localStorage.getItem("lf3"))||{}}catch(e){return{}}}
+const sv=ld();
+let S={screen:"setup",apiKey:sv.apiKey||"",mode:"",messages:[],input:"",loading:false,feedback:[],level:0,sideTab:"feedback",mobilePanel:false,apiError:"",theme:sv.theme||"light",xp:sv.xp||0,xpLevel:sv.xpLevel||1,streak:sv.streak||0,lastDate:sv.lastDate||"",achievements:sv.achievements||[],showXp:false,xpGained:0,totalMessages:sv.totalMessages||0,totalVocab:sv.totalVocab||0,lessonsCompleted:sv.lessonsCompleted||[],friendChats:sv.friendChats||0,slangDict:sv.slangDict||[],currentLesson:null,friendScenario:"hangout",username:sv.username||"",watchUrl:"",watchVideoId:"",watchTitle:"",watchWith:"friends",videosWatched:sv.videosWatched||0,playingTts:null,translatingWord:null,translationResult:""};
 if(S.apiKey)S.screen="dashboard";
 document.documentElement.setAttribute("data-theme",S.theme);
- 
-function persist(){try{localStorage.setItem("lf2",JSON.stringify({apiKey:S.apiKey,xp:S.xp,xpLevel:S.xpLevel,streak:S.streak,lastDate:S.lastDate,achievements:S.achievements,totalMessages:S.totalMessages,totalVocab:S.totalVocab,lessonsCompleted:S.lessonsCompleted,friendChats:S.friendChats,slangDict:S.slangDict,theme:S.theme,journal:S.journal,username:S.username}))}catch(e){}}
-function set(u){Object.assign(S,u);render();persist()}
- 
-function checkStreak(){const t=new Date().toISOString().slice(0,10);if(S.lastDate===t)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.lastDate===y?S.streak++:S.streak=1;S.lastDate=t;checkAch();persist()}
-function addXp(n){S.xp+=n;S.xpGained=n;S.showXp=true;const need=S.xpLevel*100;while(S.xp>=need){S.xp-=need;S.xpLevel++}persist();render();setTimeout(()=>{S.showXp=false;render()},1500)}
-function checkAch(){const u=new Set(S.achievements);if(S.totalMessages>=1)u.add("first_msg");if(S.streak>=3)u.add("streak_3");if(S.totalVocab>=10)u.add("vocab_10");if(S.totalVocab>=50)u.add("vocab_50");if(S.slangDict.length>=10)u.add("slang_10");if(S.lessonsCompleted.length>=3)u.add("lesson_3");if(S.friendChats>=5)u.add("friends_5");S.achievements=[...u];persist()}
- 
-function speak(text){if(S.playingTts){speechSynthesis.cancel();S.playingTts=null;render();return}const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=0.85;u.onend=()=>{S.playingTts=null;render()};u.onerror=()=>{S.playingTts=null;render()};S.playingTts=text;render();speechSynthesis.speak(u)}
-async function translateWord(w){S.translatingWord=w;S.translationResult="...";render();try{S.translationResult=await callAPI([{role:"user",content:`Translate "${w}" to Portuguese. ONLY the translation.`}],"Translator. ONLY translation, nothing else.")}catch(e){S.translationResult="Erro"}render();setTimeout(()=>{S.translatingWord=null;render()},3000)}
- 
-async function callAPI(msgs,sys){const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6-20250725",max_tokens:1200,system:sys,messages:msgs})});if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`Erro ${r.status}`)}const d=await r.json();return d.content?.map(c=>c.text||"").join("")||""}
- 
-// ═══════ SYSTEM PROMPTS ═══════
-function teacherPrompt(){
-  const lesson=S.currentLesson?LESSONS.find(l=>l.id===S.currentLesson):null;
-  const lessonInstr=lesson?`\nCURRENT LESSON: "${lesson.title}" — teach about: ${lesson.topic}. Use the whiteboard format for grammar explanations.`:"";
-  return`You are Mr. James, a friendly American English teacher for Brazilian students. You're patient, encouraging, and you make grammar fun. Student level: ${LEVELS[S.level]}.${lessonInstr}
- 
-PERSONALITY: Warm, didactic, uses humor. Address the student by name if known. Give structured explanations.
- 
-TEACHING STYLE:
-- Use a WHITEBOARD section wrapped in [WHITEBOARD]...[/WHITEBOARD] for grammar explanations with examples
-- Inside whiteboard, use [FORMAL]text[/FORMAL] for textbook English and [REAL]text[/REAL] for how Americans actually say it
-- Always show the "Real vs Formal" comparison when relevant
-- Give cultural context about American English
- 
-CULTURAL NOTES: When relevant, add [CULTURE]...[/CULTURE] blocks explaining how Americans really use this in daily life vs what textbooks teach.
- 
-After your response, add "---DATA---" then JSON:
-{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese feedback"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"gonna","meaning":"going to","example":"I'm gonna go","formal":"I am going to go"}],"culturalNote":"Portuguese cultural insight"}`
-}
- 
-function friendsPrompt(){
-  const sc=FRIEND_SCENARIOS.find(x=>x.id===S.friendScenario);
-  return`You are simulating a group chat with 3 American friends talking to a Brazilian who's learning English. The Brazilian is in the chat and they all know they're helping them practice while keeping it real and fun.
- 
-THE FRIENDS (respond as ALL of them in one message, each on their own line with their name):
-- Jake 😎: ${FRIENDS[0].style}
-- Mia 💅: ${FRIENDS[1].style}
-- Tyler 🎮: ${FRIENDS[2].style}
- 
-SCENARIO: ${sc.prompt}
- 
-FORMAT: Each friend responds on a new line, prefixed with their name and emoji:
-😎 Jake: [their message]
-💅 Mia: [their message]  
-🎮 Tyler: [their message]
- 
-Not all three need to respond every time - sometimes 1 or 2 is more natural. Keep it real.
- 
-IMPORTANT RULES:
-1. Use REAL American casual English - slang, abbreviations, contractions
-2. When the student makes a mistake, ONE friend gently corrects in a natural way (like "oh you mean..." or "*correct form*")
-3. Keep the conversation flowing naturally
-4. Use texting style sometimes (u, ur, rn, ngl, tbh, lol, lmao, bruh, etc.)
-5. Reference pop culture, memes, current trends naturally
-6. If they write in Portuguese, say something like "english only bro 😂" but be nice about it
- 
-After your response, add "---DATA---" then JSON:
-{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese feedback"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"ngl","meaning":"not gonna lie (pra ser sincero)","example":"ngl that was fire","formal":"To be honest, that was amazing"}],"culturalNote":"Portuguese cultural note about the slang/expressions used"}`
-}
- 
-function freePrompt(){
-  return`You are a friendly English conversation partner. Student level: ${LEVELS[S.level]}. Have natural conversation in English. Be helpful but not overly formal. Correct mistakes gently.
- 
-After response, add "---DATA---" then JSON:
-{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[],"culturalNote":""}`
-}
- 
-// ═══════ SEND MESSAGE ═══════
-async function sendMsg(){
-  if(!S.input.trim()||S.loading)return;
-  const txt=S.input.trim();
-  const msgs=[...S.messages,{role:"user",content:txt}];
-  set({messages:msgs,input:"",loading:true});
-  checkStreak();S.totalMessages++;
- 
-  const sysP=S.mode==="teacher"?teacherPrompt():S.mode==="friends"?friendsPrompt():freePrompt();
- 
-  try{
-    const h=msgs.slice(-14).map(m=>({role:m.role,content:m.content}));
-    const full=await callAPI(h,sysP);
-    let chat=full,data=null;
-    if(full.includes("---DATA---")){const p=full.split("---DATA---");chat=p[0].trim();try{const m=p[1].match(/\{[\s\S]*\}/);if(m)data=JSON.parse(m[0])}catch(e){}}
- 
-    // Parse friend messages
-    let parsedMsgs=[];
-    if(S.mode==="friends"&&chat){
-      const lines=chat.split("\n").filter(l=>l.trim());
-      let current=null;
-      for(const line of lines){
-        const jm=line.match(/^😎\s*Jake[:\s](.+)/i);const mm=line.match(/^💅\s*Mia[:\s](.+)/i);const tm=line.match(/^🎮\s*Tyler[:\s](.+)/i);
-        if(jm)parsedMsgs.push({friend:"jake",text:jm[1].trim()});
-        else if(mm)parsedMsgs.push({friend:"mia",text:mm[1].trim()});
-        else if(tm)parsedMsgs.push({friend:"tyler",text:tm[1].trim()});
-        else if(parsedMsgs.length)parsedMsgs[parsedMsgs.length-1].text+=" "+line.trim();
-      }
-      if(!parsedMsgs.length)parsedMsgs=[{friend:"jake",text:chat}];
-    }
- 
-    const u={messages:[...msgs,{role:"assistant",content:chat,parsed:parsedMsgs}],loading:false};
- 
-    if(data){
-      const nf=[];
-      (data.corrections||[]).forEach(c=>nf.push({type:"correction",text:`"${c.original}" → "${c.corrected}"`,detail:c.explanation}));
-      (data.positive||[]).forEach(p=>nf.push({type:"positive",text:p}));
-      if(data.culturalNote)nf.push({type:"culture",text:"🇺🇸 "+data.culturalNote});
-      if(nf.length)u.feedback=[...nf,...S.feedback].slice(0,50);
- 
-      S.totalVocab+=(data.vocabNew?.length||0);
-      if(data.suggestedLevel!==undefined&&data.suggestedLevel!==S.level)u.level=data.suggestedLevel;
- 
-      // Add slang to dictionary
-      if(data.slangNew?.length){
-        const newSlang=data.slangNew.filter(s=>s.word&&!S.slangDict.find(x=>x.word.toLowerCase()===s.word.toLowerCase()));
-        if(newSlang.length)S.slangDict=[...newSlang,...S.slangDict].slice(0,100);
-      }
-    }
-    if(S.mode==="friends")S.friendChats++;
-    addXp(S.mode==="teacher"?15:S.mode==="friends"?12:10);
-    checkAch();set(u);
-  }catch(err){set({messages:[...msgs,{role:"assistant",content:`Erro: ${err.message} 🔄`}],loading:false})}
-  setTimeout(()=>{document.getElementById("chat-end")?.scrollIntoView({behavior:"smooth"});document.getElementById("msg-input")?.focus()},50);
-}
- 
-// ═══════ MODE SETUP ═══════
-function startTeacher(lessonId){
-  const lesson=lessonId?LESSONS.find(l=>l.id===lessonId):null;
-  const greeting=lesson?`📖 Welcome to today's lesson: **${lesson.title}**!\n\n${lesson.desc}. Let's dive in — I'll explain the rules and we'll practice together. Ready?`:`Hello! I'm Mr. James, your English teacher. 👨‍🏫\n\nWhat would you like to learn today? We can work on grammar, vocabulary, or just practice conversation. I'm here to help!`;
-  set({screen:"chat",mode:"teacher",currentLesson:lessonId||null,messages:[{role:"assistant",content:greeting}],feedback:[],sideTab:"feedback",mobilePanel:false});
-}
-function startFriends(scenario){
-  set({screen:"chat",mode:"friends",friendScenario:scenario||"hangout",messages:[{role:"assistant",content:"😎 Jake: yooo what's up! welcome to the chat bro 🔥\n💅 Mia: hiii!! omg finally you're here, we've been waiting!\n🎮 Tyler: sup. glad you could make it 👋",parsed:[{friend:"jake",text:"yooo what's up! welcome to the chat bro 🔥"},{friend:"mia",text:"hiii!! omg finally you're here, we've been waiting!"},{friend:"tyler",text:"sup. glad you could make it 👋"}]}],feedback:[],sideTab:"slang",mobilePanel:false});
-}
-function startFree(){set({screen:"chat",mode:"free",messages:[{role:"assistant",content:"Hey! Let's chat in English. Talk about anything you want — I'm here to help you practice! 😊"}],feedback:[],sideTab:"feedback",mobilePanel:false})}
+
+function save(){try{localStorage.setItem("lf3",JSON.stringify({apiKey:S.apiKey,xp:S.xp,xpLevel:S.xpLevel,streak:S.streak,lastDate:S.lastDate,achievements:S.achievements,totalMessages:S.totalMessages,totalVocab:S.totalVocab,lessonsCompleted:S.lessonsCompleted,friendChats:S.friendChats,slangDict:S.slangDict,theme:S.theme,username:S.username,videosWatched:S.videosWatched}))}catch(e){}}
+function set(u){Object.assign(S,u);render();save()}
+function checkStreak(){const t=new Date().toISOString().slice(0,10);if(S.lastDate===t)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.lastDate===y?S.streak++:S.streak=1;S.lastDate=t;checkAch();save()}
+function addXp(n){S.xp+=n;S.xpGained=n;S.showXp=true;const nd=S.xpLevel*100;while(S.xp>=nd){S.xp-=nd;S.xpLevel++}save();render();setTimeout(()=>{S.showXp=false;render()},1500)}
+function checkAch(){const u=new Set(S.achievements);if(S.totalMessages>=1)u.add("first_msg");if(S.streak>=3)u.add("streak_3");if(S.totalVocab>=10)u.add("vocab_10");if(S.totalVocab>=50)u.add("vocab_50");if(S.slangDict.length>=10)u.add("slang_10");if(S.lessonsCompleted.length>=3)u.add("lesson_3");if(S.friendChats>=5)u.add("friends_5");if(S.videosWatched>=3)u.add("watch_3");S.achievements=[...u];save()}
+function speak(t){if(S.playingTts){speechSynthesis.cancel();S.playingTts=null;render();return}const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;u.onend=()=>{S.playingTts=null;render()};u.onerror=()=>{S.playingTts=null;render()};S.playingTts=t;render();speechSynthesis.speak(u)}
+async function translateWord(w){S.translatingWord=w;S.translationResult="...";render();try{S.translationResult=await api([{role:"user",content:`Translate "${w}" to Portuguese. ONLY the translation.`}],"Translator. ONLY translation.")}catch(e){S.translationResult="Erro"}render();setTimeout(()=>{S.translatingWord=null;render()},3000)}
+async function api(msgs,sys){const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":S.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6-20250725",max_tokens:1200,system:sys,messages:msgs})});if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`Erro ${r.status}`)}const d=await r.json();return d.content?.map(c=>c.text||"").join("")||""}
+
+function teacherP(){const l=S.currentLesson?LESSONS.find(x=>x.id===S.currentLesson):null;return`You are Mr. James, a friendly American English teacher for Brazilian students. Level: ${LVS[S.level]}.${l?` LESSON: "${l.title}" — teach: ${l.topic}.`:""}\nUse [WHITEBOARD]...[/WHITEBOARD] for grammar. Inside use [FORMAL]text[/FORMAL] and [REAL]text[/REAL]. Add [CULTURE]...[/CULTURE] for cultural notes.\nAfter response add "---DATA---" then JSON:\n{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"gonna","meaning":"going to","example":"I'm gonna go","formal":"I am going to go"}],"culturalNote":"Portuguese insight"}`}
+function friendsP(){const sc=FSCENES.find(x=>x.id===S.friendScenario);return`Simulate a group chat with 3 American friends helping a Brazilian practice English.\nJake: ${FR[0].style}\nMia: ${FR[1].style}\nTyler: ${FR[2].style}\nSCENARIO: ${sc.p}\nFORMAT each response as:\n😎 Jake: [msg]\n💅 Mia: [msg]\n🎮 Tyler: [msg]\nNot all 3 need to respond every time. Use REAL casual English, slang, abbreviations. Correct mistakes naturally.\nAfter response add "---DATA---" then JSON:\n{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[{"word":"ngl","meaning":"not gonna lie","example":"ngl that was fire","formal":"To be honest, that was amazing"}],"culturalNote":"Portuguese note"}`}
+function freeP(){return`Friendly English conversation partner. Level: ${LVS[S.level]}. Natural conversation, correct mistakes gently.\nAfter response add "---DATA---" then JSON:\n{"corrections":[{"original":"...","corrected":"...","explanation":"Portuguese"}],"positive":["Portuguese"],"vocabNew":["words"],"grammarScore":0-100,"suggestedLevel":0-4,"slangNew":[],"culturalNote":""}`}
+function watchP(){const v=S.watchTitle?`Watching: "${S.watchTitle}".`:"Watching a YouTube video.";return(S.watchWith==="friends"?friendsP():teacherP())+`\nCONTEXT: Watch party. ${v} React to what the student says about the video. Explain slang/expressions.`}
+
+async function sendMsg(){if(!S.input.trim()||S.loading)return;const txt=S.input.trim();const msgs=[...S.messages,{role:"user",content:txt}];set({messages:msgs,input:"",loading:true});checkStreak();S.totalMessages++;
+const sysP=S.mode==="watch"?watchP():S.mode==="teacher"?teacherP():S.mode==="friends"?friendsP():freeP();
+try{const h=msgs.slice(-14).map(m=>({role:m.role,content:m.content}));const full=await api(h,sysP);let chat=full,data=null;
+if(full.includes("---DATA---")){const p=full.split("---DATA---");chat=p[0].trim();try{const m=p[1].match(/\{[\s\S]*\}/);if(m)data=JSON.parse(m[0])}catch(e){}}
+let parsed=[];
+if((S.mode==="friends"||(S.mode==="watch"&&S.watchWith==="friends"))&&chat){const lines=chat.split("\n").filter(l=>l.trim());for(const line of lines){const jm=line.match(/^😎\s*Jake[:\s](.+)/i);const mm=line.match(/^💅\s*Mia[:\s](.+)/i);const tm=line.match(/^🎮\s*Tyler[:\s](.+)/i);if(jm)parsed.push({friend:"jake",text:jm[1].trim()});else if(mm)parsed.push({friend:"mia",text:mm[1].trim()});else if(tm)parsed.push({friend:"tyler",text:tm[1].trim()});else if(parsed.length)parsed[parsed.length-1].text+=" "+line.trim()}if(!parsed.length)parsed=[{friend:"jake",text:chat}]}
+const u={messages:[...msgs,{role:"assistant",content:chat,parsed}],loading:false};
+if(data){const nf=[];(data.corrections||[]).forEach(c=>nf.push({type:"correction",text:`"${c.original}" → "${c.corrected}"`,detail:c.explanation}));(data.positive||[]).forEach(p=>nf.push({type:"positive",text:p}));if(data.culturalNote)nf.push({type:"culture",text:data.culturalNote});if(nf.length)u.feedback=[...nf,...S.feedback].slice(0,50);S.totalVocab+=(data.vocabNew?.length||0);if(data.suggestedLevel!==undefined&&data.suggestedLevel!==S.level)u.level=data.suggestedLevel;if(data.slangNew?.length){const ns=data.slangNew.filter(s=>s.word&&!S.slangDict.find(x=>x.word.toLowerCase()===s.word.toLowerCase()));if(ns.length)S.slangDict=[...ns,...S.slangDict].slice(0,100)}}
+if(S.mode==="friends")S.friendChats++;addXp(S.mode==="teacher"?15:S.mode==="friends"?12:10);checkAch();set(u)}catch(err){set({messages:[...msgs,{role:"assistant",content:`Erro: ${err.message} 🔄`}],loading:false})}
+setTimeout(()=>{document.getElementById("chat-end")?.scrollIntoView({behavior:"smooth"});document.getElementById("msg-input")?.focus()},50)}
+
+function startTeacher(lid){const l=lid?LESSONS.find(x=>x.id===lid):null;set({screen:"chat",mode:"teacher",currentLesson:lid||null,messages:[{role:"assistant",content:l?`Welcome to today's lesson: **${l.title}**!\n\n${l.desc}. Let's dive in — ready?`:"Hello! I'm Mr. James, your English teacher.\n\nWhat would you like to work on? Grammar, vocabulary, or just practice conversation?"}],feedback:[],sideTab:"feedback",mobilePanel:false})}
+function startFriends(sc){set({screen:"chat",mode:"friends",friendScenario:sc||"hangout",messages:[{role:"assistant",content:"😎 Jake: yooo what's up! welcome to the chat bro 🔥\n💅 Mia: hiii!! omg finally you're here!\n🎮 Tyler: sup. glad you could make it 👋",parsed:[{friend:"jake",text:"yooo what's up! welcome to the chat bro 🔥"},{friend:"mia",text:"hiii!! omg finally you're here!"},{friend:"tyler",text:"sup. glad you could make it 👋"}]}],feedback:[],sideTab:"slang",mobilePanel:false})}
+function startFree(){set({screen:"chat",mode:"free",messages:[{role:"assistant",content:"Hey! Let's chat in English — talk about anything you want. 😊"}],feedback:[],sideTab:"feedback",mobilePanel:false})}
+function startWatch(vid,title){S.videosWatched++;checkAch();save();const g=S.watchWith==="friends"?{content:"😎 Jake: yooo we watching this? let's gooo 🔥\n💅 Mia: omg yes!! watch party!\n🎮 Tyler: alright let's see if it's good",parsed:[{friend:"jake",text:"yooo we watching this? let's gooo 🔥"},{friend:"mia",text:"omg yes!! watch party!"},{friend:"tyler",text:"alright let's see if it's good"}]}:{content:`Welcome to Watch & Learn! 👨‍🏫\n\nAs you watch, tell me:\n• Words or phrases you hear\n• Anything you don't understand\n\nI'll explain everything!`};set({screen:"chat",mode:"watch",watchVideoId:vid||"",watchTitle:title||"",messages:[{role:"assistant",...g}],feedback:[],sideTab:"slang",mobilePanel:false})}
+function loadVideo(){const url=S.watchUrl.trim();if(!url)return;const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);if(!m){alert("Cole um link válido do YouTube.");return}S.watchVideoId=m[1];S.watchTitle=url;S.videosWatched++;checkAch();save();render()}
 function goToDash(){set({screen:"dashboard"})}
- 
-function saveApiKey(){const k=S.apiKey.trim();if(!k.startsWith("sk-ant-")){set({apiError:"A chave deve começar com sk-ant-..."});return}set({screen:"dashboard",apiError:""});persist()}
-function toggleTheme(){S.theme=S.theme==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);persist();render()}
+function saveKey(){const k=S.apiKey.trim();if(!k.startsWith("sk-ant-")){set({apiError:"A chave deve começar com sk-ant-..."});return}set({screen:"dashboard",apiError:""});save()}
+function toggleTheme(){S.theme=S.theme==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();render()}
 function esc(s){return s?String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"):""}
-function renderWords(t){return t.split(/(\s+)/).map(w=>{const c=w.replace(/[.,!?;:"""''()\[\]{}]/g,"").trim();if(!c)return esc(w);return`<span class="word-cl" onclick="translateWord('${c.replace(/'/g,"\\'")}')">${esc(w)}</span>`}).join("")}
-function progHTML(v,m,c,l){const p=Math.min(v/m*100,100);let h=`<div style="margin-bottom:8px">`;if(l)h+=`<div style="font-size:10px;color:var(--mt);margin-bottom:3px;display:flex;justify-content:space-between"><span>${l}</span><span style="font-weight:600">${Math.round(p)}%</span></div>`;h+=`<div class="prog-track"><div class="prog-fill" style="width:${p}%;background:${c}"></div></div></div>`;return h}
- 
-function renderBotMessage(msg){
-  let html=msg.content;
-  // Process whiteboard
-  html=html.replace(/\[WHITEBOARD\]([\s\S]*?)\[\/WHITEBOARD\]/gi,(m,content)=>{
-    let wb=content.replace(/\[FORMAL\](.*?)\[\/FORMAL\]/gi,'<span class="wb-formal">📗 $1</span>');
-    wb=wb.replace(/\[REAL\](.*?)\[\/REAL\]/gi,'<span class="wb-real">🗣️ $1</span>');
-    return`<div class="whiteboard"><div class="wb-title">📋 Quadro</div>${wb}</div>`;
-  });
-  html=html.replace(/\[CULTURE\]([\s\S]*?)\[\/CULTURE\]/gi,(m,content)=>`<div class="culture-note"><div class="cn-title">🇺🇸 Nota Cultural</div>${content}</div>`);
-  // Bold
-  html=html.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
-  return html;
-}
- 
-// ═══════ RENDER ═══════
-function render(){const app=document.getElementById("app");document.body.className=S.screen==="chat"?"no-scroll":"";
- 
-if(S.screen==="setup"){
-  app.innerHTML=`<div class="setup"><div class="setup-box ani"><div style="font-size:42px;text-align:center;margin-bottom:12px;animation:float 3s ease-in-out infinite">🌍</div><h1><span class="brand">LinguaFlow</span></h1><p class="sub">Aprenda inglês de verdade</p><label>Chave de API da Anthropic</label><input class="input" type="password" id="api-key" placeholder="sk-ant-..." value="${esc(S.apiKey)}"><div class="hint">Crie em <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>. Fica salva no navegador.</div>${S.apiError?`<div class="err-msg">${esc(S.apiError)}</div>`:""}<div style="margin-top:16px"><label>Seu nome</label><input class="input" id="uname" placeholder="Como quer ser chamado?" value="${esc(S.username)}"></div><button class="btn btn-p" style="width:100%;margin-top:20px;padding:14px" id="save-key">Começar →</button></div></div>`;
-  document.getElementById("api-key").addEventListener("input",e=>{S.apiKey=e.target.value});
-  document.getElementById("api-key").addEventListener("keydown",e=>{if(e.key==="Enter")saveApiKey()});
-  document.getElementById("uname").addEventListener("input",e=>{S.username=e.target.value});
-  document.getElementById("save-key").addEventListener("click",saveApiKey);return}
- 
-const themeBtn=`<button class="btn-i corner-btn" onclick="toggleTheme()">${S.theme==="dark"?"☀️":"🌙"}</button>`;
- 
-if(S.screen==="dashboard"){
-  const nm=S.username||"Estudante",xpN=S.xpLevel*100;
-  app.innerHTML=`${themeBtn}<div class="dash"><div class="dash-c ani">
-  <div style="text-align:center;padding:20px 0 16px"><div style="font-size:42px;margin-bottom:8px">🇺🇸</div>
-  <div class="dash-greeting">Hey, ${esc(nm)}! 👋</div>
-  <div class="dash-sub">Escolha como quer praticar hoje</div>
-  ${progHTML(S.xp,xpN,"var(--ac)",`Nível ${S.xpLevel} — ${S.xp}/${xpN} XP`)}
-  </div>
-  ${S.streak>0?`<div class="streak-banner"><div class="streak-fire">🔥</div><div><div style="font-weight:700;font-size:16px">${S.streak} dia${S.streak>1?"s":""} seguido${S.streak>1?"s":""}!</div><div style="font-size:12px;color:var(--mt)">Continue para manter seu streak</div></div></div>`:""}
-  <div class="dash-stats"><div class="d-stat"><div class="icon">📚</div><div class="val" style="color:#7c6aed">${S.totalVocab}</div><div class="lbl">Palavras</div></div><div class="d-stat"><div class="icon">🔥</div><div class="val" style="color:#ef6461">${S.slangDict.length}</div><div class="lbl">Gírias</div></div><div class="d-stat"><div class="icon">🔥</div><div class="val" style="color:#f5b638">${S.streak}</div><div class="lbl">Streak</div></div><div class="d-stat"><div class="icon">🏆</div><div class="val" style="color:#2dd4a0">${S.achievements.length}</div><div class="lbl">Conquistas</div></div></div>
- 
-  <div class="mode-cards">
-    <div class="mode-card mc-teacher" id="mc-teacher">
-      <span class="mc-badge" style="background:rgba(59,130,246,.15);color:#3b82f6">Aula</span>
-      <div class="mc-icon">👨‍🏫</div>
-      <div class="mc-title">Aula com Mr. James</div>
-      <div class="mc-desc">Professor particular que explica gramática no quadro, compara o inglês formal com o real, e te guia por lições estruturadas.</div>
-      <div class="mc-tags"><span class="mc-tag">Gramática</span><span class="mc-tag">Quadro branco</span><span class="mc-tag">Lições</span><span class="mc-tag">Formal vs Real</span></div>
-    </div>
-    <div class="mode-card mc-friends" id="mc-friends">
-      <span class="mc-badge" style="background:rgba(239,100,97,.15);color:#ef6461">Novo!</span>
-      <div class="mc-icon">👥</div>
-      <div class="mc-title">Chat com Amigos Americanos</div>
-      <div class="mc-desc">Grupo com Jake 😎 (zoeiro), Mia 💅 (fitness) e Tyler 🎮 (gamer). Gírias, abreviações, memes — inglês de verdade como americano fala.</div>
-      <div class="mc-tags"><span class="mc-tag">Gírias</span><span class="mc-tag">Abreviações</span><span class="mc-tag">Cenários</span><span class="mc-tag">Cultura</span></div>
-    </div>
-    <div class="mode-card mc-free" id="mc-free">
-      <div class="mc-icon">💬</div>
-      <div class="mc-title">Conversa Livre</div>
-      <div class="mc-desc">Bate-papo natural em inglês sobre qualquer assunto. Ideal para praticar fluência.</div>
-      <div class="mc-tags"><span class="mc-tag">Casual</span><span class="mc-tag">Qualquer tema</span></div>
-    </div>
-  </div>
- 
-  <div style="margin-bottom:10px;font-weight:600;font-size:13px">📖 Aulas Disponíveis</div>
-  ${LESSONS.map(l=>`<div class="lesson-card" data-lesson="${l.id}"><div class="lesson-num ${S.lessonsCompleted.includes(l.id)?'completed':''}">${S.lessonsCompleted.includes(l.id)?'✓':l.id}</div><div class="lesson-info"><div class="l-title">${l.title}</div><div class="l-desc">${l.desc}</div></div></div>`).join("")}
- 
-  ${S.slangDict.length?`<div style="margin:20px 0 10px;font-weight:600;font-size:13px">🔥 Últimas Gírias Aprendidas</div>${S.slangDict.slice(0,5).map(s=>`<div class="slang-item"><div class="slang-word">${esc(s.word)}</div><div class="slang-def">${esc(s.meaning)}</div>${s.example?`<div class="slang-ex">"${esc(s.example)}"</div>`:""}</div>`).join("")}`:""}
- 
-  <div style="margin-top:20px;text-align:center"><button class="btn btn-g btn-s" onclick="set({screen:'setup'})">⚙️ Configurações</button></div>
-  </div></div>`;
-  document.getElementById("mc-teacher").addEventListener("click",()=>startTeacher());
-  document.getElementById("mc-friends").addEventListener("click",()=>startFriends());
-  document.getElementById("mc-free").addEventListener("click",startFree);
-  document.querySelectorAll("[data-lesson]").forEach(b=>b.addEventListener("click",()=>startTeacher(+b.dataset.lesson)));
-  return}
- 
-// ═══════ CHAT SCREEN ═══════
-const modeInfo={teacher:{title:"👨‍🏫 Mr. James",sub:"Professor de Inglês"},friends:{title:"👥 The Squad",sub:"Jake • Mia • Tyler"},free:{title:"💬 Free Chat",sub:"Conversa livre"}}[S.mode];
- 
-app.innerHTML=`
-<div class="mob-overlay ${S.mobilePanel?"open":""}" id="mob-ov"></div>
-${S.showXp?`<div class="xp-popup"><div class="xp-inner"><div class="xp-amount">+${S.xpGained} XP</div><div class="xp-label">Continue assim!</div></div></div>`:""}
+function rw(t){return t.split(/(\s+)/).map(w=>{const c=w.replace(/[.,!?;:"""''()\[\]{}]/g,"").trim();if(!c)return esc(w);return`<span class="word-cl" onclick="translateWord('${c.replace(/'/g,"\\'")}')">${esc(w)}</span>`}).join("")}
+function renderBot(m){let h=m.content;h=h.replace(/\[WHITEBOARD\]([\s\S]*?)\[\/WHITEBOARD\]/gi,(x,c)=>{let w=c.replace(/\[FORMAL\](.*?)\[\/FORMAL\]/gi,'<span class="wb-formal">📗 $1</span>');w=w.replace(/\[REAL\](.*?)\[\/REAL\]/gi,'<span class="wb-real">🗣️ $1</span>');return`<div class="whiteboard"><div class="wb-title">Whiteboard</div>${w}</div>`});h=h.replace(/\[CULTURE\]([\s\S]*?)\[\/CULTURE\]/gi,(x,c)=>`<div class="culture-note"><div class="cn-title">Cultural Note</div>${c}</div>`);h=h.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');return h}
+function progH(v,m,c,l){const p=Math.min(v/m*100,100);let h=`<div style="margin-bottom:8px">`;if(l)h+=`<div style="font-size:11px;color:var(--mt);margin-bottom:4px;display:flex;justify-content:space-between"><span>${l}</span><span style="font-weight:600">${Math.round(p)}%</span></div>`;h+=`<div class="prog-track"><div class="prog-fill" style="width:${p}%;background:${c}"></div></div></div>`;return h}
+
+// ═════ RENDER ═════
+function render(){const a=document.getElementById("app");document.body.className=S.screen==="chat"?"lock":"";
+
+// SETUP
+if(S.screen==="setup"){a.innerHTML=`<div class="setup"><div class="setup-box ani"><div style="text-align:center;margin-bottom:20px"><div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--ac),#818CF8);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="#fff"/></svg></div></div><h1>LinguaFlow</h1><p class="sub">Aprenda inglês de verdade</p><label>Chave de API</label><input class="input" type="password" id="api-key" placeholder="sk-ant-..." value="${esc(S.apiKey)}"><div class="hint">Crie em <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a></div>${S.apiError?`<div class="err-msg">${esc(S.apiError)}</div>`:""}<div style="margin-top:16px"><label>Seu nome</label><input class="input" id="uname" placeholder="Como quer ser chamado?" value="${esc(S.username)}"></div><button class="btn btn-p" style="width:100%;margin-top:24px;padding:14px;font-size:15px" id="save-key">Começar</button></div></div>`;
+$("api-key").addEventListener("input",e=>{S.apiKey=e.target.value});$("api-key").addEventListener("keydown",e=>{if(e.key==="Enter")saveKey()});$("uname").addEventListener("input",e=>{S.username=e.target.value});$("save-key").addEventListener("click",saveKey);return}
+
+const tb=`<button class="btn-i corner-btn" onclick="toggleTheme()" title="Tema">${S.theme==="dark"?"☀️":"🌙"}</button>`;
+
+// DASHBOARD
+if(S.screen==="dashboard"){const nm=S.username||"Estudante",xpN=S.xpLevel*100;
+a.innerHTML=`${tb}<div class="dash"><div class="dash-c">
+<div class="ani" style="padding:28px 0 20px"><div class="dash-hi">Hey, ${esc(nm)} 👋</div><div class="dash-sub">Escolha como quer praticar hoje</div>${progH(S.xp,xpN,"var(--ac)",`Nível ${S.xpLevel} · ${S.xp} / ${xpN} XP`)}</div>
+${S.streak>0?`<div class="streak-card ani"><div class="streak-num">${S.streak}</div><div><div class="streak-label" style="font-weight:700">dia${S.streak>1?"s":""} seguido${S.streak>1?"s":""} 🔥</div><div style="font-size:12px;opacity:.7">Continue para manter seu streak</div></div></div>`:""}
+<div class="stats-row ani">${[{v:S.totalVocab,l:"Palavras",c:"var(--ac)"},{v:S.slangDict.length,l:"Gírias",c:"var(--warn)"},{v:S.totalMessages,l:"Mensagens",c:"#EC4899"},{v:S.achievements.length,l:"Conquistas",c:"var(--pos)"}].map(s=>`<div class="stat-card"><div class="stat-val" style="color:${s.c}">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join("")}</div>
+
+<div class="modes ani">
+  <div class="mc mc-teacher" id="mc-t"><div class="mc-icon"><div class="avatar av-teacher">MJ</div></div><div class="mc-title">Mr. James</div><div class="mc-desc">Aulas estruturadas com quadro branco, comparações formal vs real.</div><div class="mc-tags"><span class="mc-tag">Gramática</span><span class="mc-tag">Lições</span></div></div>
+  <div class="mc mc-friends" id="mc-f"><div class="mc-icon"><div style="display:flex;gap:-4px"><div class="avatar av-jake av-sm" style="margin-right:-6px;z-index:3">J</div><div class="avatar av-mia av-sm" style="margin-right:-6px;z-index:2">M</div><div class="avatar av-tyler av-sm">T</div></div></div><div class="mc-title">Amigos Americanos</div><div class="mc-desc">Jake, Mia e Tyler — gírias, abreviações, inglês de verdade.</div><div class="mc-tags"><span class="mc-tag">Gírias</span><span class="mc-tag">Cultura</span></div></div>
+  <div class="mc mc-watch" id="mc-w"><div class="mc-badge">Novo</div><div class="mc-icon"><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="3" stroke="var(--tx)" stroke-width="1.5"/><path d="M10 9.5l4.5 2.5-4.5 2.5V9.5z" fill="var(--tx)"/><path d="M8 21h8" stroke="var(--tx)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="mc-title">Watch Party</div><div class="mc-desc">Assista YouTube com amigos ou com Mr. James explicando.</div><div class="mc-tags"><span class="mc-tag">YouTube</span><span class="mc-tag">Listening</span></div></div>
+  <div class="mc mc-free" id="mc-fr"><div class="mc-icon"><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="var(--tx)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="mc-title">Conversa Livre</div><div class="mc-desc">Bate-papo natural sobre qualquer assunto.</div><div class="mc-tags"><span class="mc-tag">Casual</span><span class="mc-tag">Fluência</span></div></div>
+</div>
+
+<div class="section-title ani">🎬 Vídeos sugeridos</div>
+<div class="vid-grid ani">${VIDS.map(v=>`<div class="vid-card" data-vid="${v.yt}" data-vt="${esc(v.title)}"><img class="vid-thumb" src="https://img.youtube.com/vi/${v.yt}/mqdefault.jpg" alt="" loading="lazy"><div class="vid-info"><div class="vid-title">${esc(v.title)}</div><div class="vid-cat">${v.cat} · ${v.lv}</div></div></div>`).join("")}</div>
+
+<div class="section-title ani">📖 Aulas</div>
+<div class="lesson-list ani">${LESSONS.map(l=>`<div class="lesson-c" data-ls="${l.id}"><div class="lesson-n ${S.lessonsCompleted.includes(l.id)?'done':''}">${S.lessonsCompleted.includes(l.id)?'✓':l.id}</div><div><div class="lesson-t">${l.title}</div><div class="lesson-d">${l.desc}</div></div></div>`).join("")}</div>
+
+<div class="section-title ani">🏆 Conquistas</div>
+<div class="ach-row ani">${ACHS.map(x=>`<div class="ach ${S.achievements.includes(x.id)?'on':''}"><span class="ach-icon">${x.icon}</span>${x.n}</div>`).join("")}</div>
+
+${S.slangDict.length?`<div class="section-title ani">🔥 Gírias recentes</div>${S.slangDict.slice(0,4).map(s=>`<div class="slang ani"><div class="slang-word">${esc(s.word)}</div><div class="slang-def">${esc(s.meaning)}</div></div>`).join("")}`:""}
+<div style="margin-top:24px;text-align:center"><button class="btn btn-g btn-s" onclick="set({screen:'setup'})">⚙️ Configurações</button></div>
+</div></div>`;
+$("mc-t").addEventListener("click",()=>startTeacher());$("mc-f").addEventListener("click",()=>startFriends());$("mc-w").addEventListener("click",()=>startWatch("",""));$("mc-fr").addEventListener("click",startFree);
+document.querySelectorAll("[data-ls]").forEach(b=>b.addEventListener("click",()=>startTeacher(+b.dataset.ls)));
+document.querySelectorAll("[data-vid]").forEach(b=>b.addEventListener("click",()=>startWatch(b.dataset.vid,b.dataset.vt)));
+return}
+
+// ═════ CHAT ═════
+const mi={teacher:{t:"Mr. James",s:"Professor de Inglês",av:TEACHER},friends:{t:"The Squad",s:"Jake · Mia · Tyler"},free:{t:"Free Chat",s:"Conversa livre"},watch:{t:"Watch Party",s:S.watchWith==="friends"?"Com amigos":"Com Mr. James"}}[S.mode];
+
+a.innerHTML=`
+<div class="mob-ov ${S.mobilePanel?"open":""}" id="mob-ov"></div>
+${S.showXp?`<div class="xp-pop"><div class="xp-inner"><div class="xp-val">+${S.xpGained}</div><div class="xp-lbl">XP ganho</div></div></div>`:""}
 <div class="app">
-  <div class="chat-area">
-    <div class="c-header">
-      <div class="h-left">
-        <button class="btn-i" onclick="goToDash()">←</button>
-        <div class="h-info"><div class="h-title">${modeInfo.title}</div><div class="h-sub">${modeInfo.sub}${S.mode==="friends"?" • "+FRIEND_SCENARIOS.find(x=>x.id===S.friendScenario).icon:""}</div></div>
-      </div>
-      <div class="h-right">
-        <div class="h-badges"><span class="badge badge-xp">⚡${S.xp}</span><span class="badge badge-streak">🔥${S.streak}</span></div>
-        ${S.mode==="friends"?`<select class="scenario-sel" id="sc-sel">${FRIEND_SCENARIOS.map(s=>`<option value="${s.id}" ${S.friendScenario===s.id?"selected":""}>${s.icon} ${s.name}</option>`).join("")}</select>`:""}
-        ${S.mode==="teacher"?`<select class="scenario-sel" id="lesson-sel"><option value="">Conversa livre</option>${LESSONS.map(l=>`<option value="${l.id}" ${S.currentLesson===l.id?"selected":""}>${l.id}. ${l.title}</option>`).join("")}</select>`:""}
-        <button class="btn-i" onclick="toggleTheme()">${S.theme==="dark"?"☀️":"🌙"}</button>
-        <button class="btn-i mob-toggle" onclick="set({mobilePanel:!S.mobilePanel})">📊</button>
-      </div>
-    </div>
-    <div class="msgs" id="msgs">
-      ${S.messages.map((m,i)=>{
-        if(m.role==="user")return`<div class="msg-row user"><div class="msg-col"><div class="msg-bbl">${esc(m.content)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`;
-        // Bot messages
-        if(S.mode==="friends"&&m.parsed?.length){
-          return m.parsed.map(p=>{
-            const f=FRIENDS.find(x=>x.id===p.friend)||FRIENDS[0];
-            return`<div class="msg-row bot"><div class="msg-avatar" style="border-color:${f.color}">${f.emoji}</div><div class="msg-col"><div class="msg-name" style="color:${f.color}">${f.name}</div><div class="msg-bbl bbl-${f.id}">${renderWords(p.text)}</div><div class="msg-acts"><button class="tts-btn" data-tts-text="${esc(p.text)}">🔊</button></div></div></div>`;
-          }).join("");
-        }
-        if(S.mode==="teacher"){
-          return`<div class="msg-row bot"><div class="msg-avatar" style="border-color:${TEACHER.color}">${TEACHER.emoji}</div><div class="msg-col"><div class="msg-name" style="color:${TEACHER.color}">${TEACHER.name}</div><div class="msg-bbl bbl-teacher">${renderBotMessage(m)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`;
-        }
-        return`<div class="msg-row bot"><div class="msg-col"><div class="msg-bbl">${renderWords(m.content)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`;
-      }).join("")}
-      ${S.loading?`<div class="msg-row bot"><div class="typing-ind"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`:""}
-      <div id="chat-end"></div>
-    </div>
-    ${S.translatingWord?`<div class="trans-bar">"${esc(S.translatingWord)}" → <strong>${esc(S.translationResult)}</strong></div>`:""}
-    <div class="input-area"><div class="input-wrap"><input id="msg-input" placeholder="${S.mode==="friends"?"Type something...":"Write in English..."}" value="${esc(S.input)}"><button class="send-btn" id="send-btn" ${S.loading||!S.input.trim()?"disabled":""}>➤</button></div></div>
-  </div>
-  <div class="side ${S.mobilePanel?"open":""}">
-    <div class="tab-bar">
-      ${(S.mode==="friends"?[["feedback","💡"],["slang","🔥"],["culture","🇺🇸"]]:S.mode==="teacher"?[["feedback","💡"],["lessons","📖"],["slang","🔥"],["culture","🇺🇸"]]:[["feedback","💡"],["slang","🔥"]]).map(([t,ic])=>`<button class="tab ${S.sideTab===t?"active":""}" data-tab="${t}">${ic} ${t==="feedback"?"Feedback":t==="slang"?"Gírias":t==="culture"?"Cultural":t==="lessons"?"Aulas":t}</button>`).join("")}
-    </div>
-    <div class="side-c">${renderSide()}</div>
-  </div>
-</div>`;
- 
+<div class="chat-area">
+<div class="c-header">
+<div class="h-left">
+<button class="btn-i" onclick="goToDash()"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+${S.mode==="teacher"||(S.mode==="watch"&&S.watchWith==="teacher")?`<div class="avatar av-teacher">MJ</div>`:S.mode==="friends"||(S.mode==="watch"&&S.watchWith==="friends")?`<div style="display:flex"><div class="avatar av-jake av-sm" style="margin-right:-4px;z-index:3">J</div><div class="avatar av-mia av-sm" style="margin-right:-4px;z-index:2">M</div><div class="avatar av-tyler av-sm">T</div></div>`:`<div class="avatar" style="background:var(--ac)"><svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>`}
+<div><div class="h-title">${mi.t}</div><div class="h-sub">${mi.s}</div></div>
+</div>
+<div class="h-right">
+<div class="h-badges"><span class="badge badge-xp">⚡ ${S.xp}</span><span class="badge badge-streak">🔥 ${S.streak}</span></div>
+${S.mode==="friends"?`<select class="sel" id="sc-sel">${FSCENES.map(s=>`<option value="${s.id}" ${S.friendScenario===s.id?"selected":""}>${s.icon} ${s.name}</option>`).join("")}</select>`:""}
+${S.mode==="teacher"?`<select class="sel" id="ls-sel"><option value="">Livre</option>${LESSONS.map(l=>`<option value="${l.id}" ${S.currentLesson===l.id?"selected":""}>${l.id}. ${l.title}</option>`).join("")}</select>`:""}
+<button class="btn-i" onclick="toggleTheme()">${S.theme==="dark"?"☀️":"🌙"}</button>
+<button class="btn-i mob-t" onclick="set({mobilePanel:!S.mobilePanel})"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div></div>
+
+${S.mode==="watch"?`
+<div class="watch-top">${S.watchVideoId?`<iframe src="https://www.youtube.com/embed/${S.watchVideoId}?rel=0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`:`<div class="watch-ph"><svg width="48" height="48" fill="none" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="3" stroke="var(--mt)" stroke-width="1.5"/><path d="M10 9.5l4.5 2.5-4.5 2.5V9.5z" fill="var(--mt)"/></svg>Cole um link do YouTube abaixo</div>`}</div>
+<div class="watch-url"><input class="input" id="w-url" placeholder="Cole o link do YouTube..." value="${esc(S.watchUrl)}" style="font-size:12px"><button class="btn btn-p btn-s" id="load-vid">▶ Carregar</button></div>
+<div class="watch-toggle"><span style="font-size:11px;color:var(--mt);margin-right:8px">Assistir com:</span><button class="wt-btn ${S.watchWith==="friends"?"active":""}" data-wm="friends">👥 Amigos</button><button class="wt-btn ${S.watchWith==="teacher"?"active":""}" data-wm="teacher">👨‍🏫 Mr. James</button></div>`:""}
+
+<div class="msgs" id="msgs">
+${S.messages.map((m,i)=>{
+if(m.role==="user")return`<div class="msg-row user"><div class="msg-col"><div class="msg-bbl">${esc(m.content)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`;
+if((S.mode==="friends"||(S.mode==="watch"&&S.watchWith==="friends"))&&m.parsed?.length)return m.parsed.map(p=>{const f=FR.find(x=>x.id===p.friend)||FR[0];return`<div class="msg-row"><div class="avatar ${f.cls} av-sm">${f.av}</div><div class="msg-col"><div class="msg-name" style="color:${f.color}">${f.name}</div><div class="msg-bbl bbl-${f.id}">${rw(p.text)}</div><div class="msg-acts"><button class="tts-btn" data-tts-t="${esc(p.text)}">🔊</button></div></div></div>`}).join("");
+if(S.mode==="teacher"||(S.mode==="watch"&&S.watchWith==="teacher"))return`<div class="msg-row"><div class="avatar av-teacher av-sm">MJ</div><div class="msg-col"><div class="msg-name" style="color:${TEACHER.color}">${TEACHER.name}</div><div class="msg-bbl bbl-teacher">${renderBot(m)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`;
+return`<div class="msg-row"><div class="msg-col"><div class="msg-bbl">${rw(m.content)}</div><div class="msg-acts"><button class="tts-btn" data-tts="${i}">🔊</button></div></div></div>`}).join("")}
+${S.loading?`<div class="msg-row"><div class="typing-dots"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`:""}
+<div id="chat-end"></div>
+</div>
+${S.translatingWord?`<div class="trans-bar">${esc(S.translatingWord)} → <strong>${esc(S.translationResult)}</strong></div>`:""}
+<div class="input-area"><div class="input-wrap"><input id="msg-input" placeholder="${S.mode==="watch"?"O que você ouviu?":S.mode==="friends"?"Type something...":"Write in English..."}" value="${esc(S.input)}"><button class="send-btn" id="send-btn" ${S.loading||!S.input.trim()?"disabled":""}>Send</button></div></div>
+</div>
+
+<div class="side ${S.mobilePanel?"open":""}">
+<div class="side-top"><div class="tab-bar">
+${(S.mode==="watch"||S.mode==="friends"?[["feedback","Feedback"],["slang","Gírias"],["culture","Cultural"]]:S.mode==="teacher"?[["feedback","Feedback"],["slang","Gírias"],["culture","Cultural"]]:
+[["feedback","Feedback"],["slang","Gírias"]]).map(([t,l])=>`<button class="tab ${S.sideTab===t?"active":""}" data-tab="${t}">${l}</button>`).join("")}
+</div></div>
+<div class="side-c">${renderSide()}</div>
+</div></div>`;
+
 // Events
-document.getElementById("mob-ov")?.addEventListener("click",()=>set({mobilePanel:false}));
+$("mob-ov")?.addEventListener("click",()=>set({mobilePanel:false}));
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>set({sideTab:b.dataset.tab})));
-document.getElementById("sc-sel")?.addEventListener("change",e=>set({friendScenario:e.target.value}));
-document.getElementById("lesson-sel")?.addEventListener("change",e=>{const v=e.target.value;S.currentLesson=v?+v:null;render()});
-const mi=document.getElementById("msg-input");if(mi){mi.addEventListener("input",e=>{S.input=e.target.value});mi.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey)sendMsg()})}
-document.getElementById("send-btn")?.addEventListener("click",sendMsg);
+$("sc-sel")?.addEventListener("change",e=>set({friendScenario:e.target.value}));
+$("ls-sel")?.addEventListener("change",e=>{S.currentLesson=e.target.value?+e.target.value:null;render()});
+$("w-url")?.addEventListener("input",e=>{S.watchUrl=e.target.value});$("w-url")?.addEventListener("keydown",e=>{if(e.key==="Enter")loadVideo()});
+$("load-vid")?.addEventListener("click",loadVideo);
+document.querySelectorAll("[data-wm]").forEach(b=>b.addEventListener("click",()=>set({watchWith:b.dataset.wm})));
+const inp=$("msg-input");if(inp){inp.addEventListener("input",e=>{S.input=e.target.value});inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey)sendMsg()})}
+$("send-btn")?.addEventListener("click",sendMsg);
 document.querySelectorAll("[data-tts]").forEach(b=>b.addEventListener("click",()=>speak(S.messages[+b.dataset.tts].content)));
-document.querySelectorAll("[data-tts-text]").forEach(b=>b.addEventListener("click",()=>speak(b.dataset.ttsText)));
-setTimeout(()=>{document.getElementById("chat-end")?.scrollIntoView({behavior:"smooth"});mi?.focus()},30);
-}
- 
+document.querySelectorAll("[data-tts-t]").forEach(b=>b.addEventListener("click",()=>speak(b.dataset.ttsT)));
+setTimeout(()=>{$("chat-end")?.scrollIntoView({behavior:"smooth"});inp?.focus()},30)}
+
 function renderSide(){
-  if(S.sideTab==="feedback"){
-    if(!S.feedback.length)return`<div class="empty"><div class="icon">💡</div><p>Converse e o feedback aparecerá aqui!</p></div>`;
-    return S.feedback.map(f=>`<div class="fb ${f.type}"><div class="fb-text">${f.type==="positive"?"✅ ":f.type==="culture"?"":"📝 "}${esc(f.text)}</div>${f.detail?`<div class="fb-detail">${esc(f.detail)}</div>`:""}</div>`).join("")}
- 
-  if(S.sideTab==="slang"){
-    if(!S.slangDict.length)return`<div class="empty"><div class="icon">🔥</div><p>${S.mode==="friends"?"Converse com o grupo e as gírias aparecerão aqui!":"Gírias que você aprender aparecerão aqui."}</p></div>`;
-    return`<div style="font-size:11px;color:var(--mt);margin-bottom:10px">${S.slangDict.length} gírias aprendidas</div>`+S.slangDict.map(s=>`<div class="slang-item"><div style="display:flex;justify-content:space-between;align-items:center"><div class="slang-word">${esc(s.word)}</div><button class="tts-btn" onclick="speak('${esc(s.example||s.word)}')" style="opacity:.6">🔊</button></div><div class="slang-def">${esc(s.meaning)}</div>${s.example?`<div class="slang-ex">"${esc(s.example)}"</div>`:""}<div class="slang-formal">📗 Formal: ${esc(s.formal||"—")}</div></div>`).join("")}
- 
-  if(S.sideTab==="culture"){
-    const notes=S.feedback.filter(f=>f.type==="culture");
-    if(!notes.length)return`<div class="empty"><div class="icon">🇺🇸</div><p>Notas culturais sobre como americanos realmente falam aparecerão aqui conforme você conversa.</p></div>`;
-    return notes.map(n=>`<div class="fb culture"><div class="fb-text">${esc(n.text)}</div></div>`).join("")}
- 
-  if(S.sideTab==="lessons"){
-    return LESSONS.map(l=>`<div class="lesson-card" data-sl="${l.id}"><div class="lesson-num ${S.lessonsCompleted.includes(l.id)?'completed':''}">${S.lessonsCompleted.includes(l.id)?'✓':l.id}</div><div class="lesson-info"><div class="l-title">${l.title}</div><div class="l-desc">${l.desc}</div></div></div>`).join("");
-  }
-  return""}
- 
-window.toggleTheme=toggleTheme;window.set=set;window.goToDash=goToDash;window.translateWord=translateWord;window.speak=speak;window.S=S;
+if(S.sideTab==="feedback"){if(!S.feedback.length)return`<div class="empty"><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="var(--mt)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Converse e o feedback aparecerá aqui</p></div>`;
+return S.feedback.map(f=>`<div class="fb ${f.type}"><div class="fb-tx">${f.type==="positive"?"✓ ":f.type==="culture"?"🇺🇸 ":"→ "}${esc(f.text)}</div>${f.detail?`<div class="fb-dt">${esc(f.detail)}</div>`:""}</div>`).join("")}
+if(S.sideTab==="slang"){if(!S.slangDict.length)return`<div class="empty"><p>Gírias que você aprender aparecerão aqui automaticamente.</p></div>`;
+return`<div style="font-size:12px;color:var(--mt);margin-bottom:12px;font-weight:500">${S.slangDict.length} gírias aprendidas</div>`+S.slangDict.map(s=>`<div class="slang"><div style="display:flex;justify-content:space-between;align-items:center"><div class="slang-word">${esc(s.word)}</div><button class="tts-btn" onclick="speak('${esc(s.example||s.word)}')" style="opacity:.5">🔊</button></div><div class="slang-def">${esc(s.meaning)}</div>${s.example?`<div class="slang-ex">"${esc(s.example)}"</div>`:""}<div class="slang-formal">📗 ${esc(s.formal||"—")}</div></div>`).join("")}
+if(S.sideTab==="culture"){const n=S.feedback.filter(f=>f.type==="culture");if(!n.length)return`<div class="empty"><p>Notas culturais aparecerão aqui conforme você conversa.</p></div>`;return n.map(x=>`<div class="fb culture"><div class="fb-tx">🇺🇸 ${esc(x.text)}</div></div>`).join("")}
+return""}
+
+function $(id){return document.getElementById(id)}
+window.toggleTheme=toggleTheme;window.set=set;window.goToDash=goToDash;window.translateWord=translateWord;window.speak=speak;window.loadVideo=loadVideo;window.S=S;
 render();
 </script>
 </body>
-</html> 
+</html>
